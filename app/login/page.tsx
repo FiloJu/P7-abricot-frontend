@@ -12,6 +12,7 @@ export default function LoginPage() {
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
+    // Submit credentials to the authentication endpoint.
     e.preventDefault();
     setError("");
 
@@ -27,13 +28,16 @@ export default function LoginPage() {
       const data = await response.json();
 
       if (response.ok) {
-        Cookies.set("token", data.data.token, { expires: 1 });
+        // Keep the token for authenticated requests and redirect the user.
+        Cookies.set("auth_token", data.data.token, { expires: 1 });
         router.push("/dashboard");
       } else {
+        // Display the API message when the credentials are rejected.
         setError(data.message || "Email ou mot de passe incorrect");
       }
     } catch {
-      setError("Impossible de joindre le serveur. Le backend est en marche ?");
+      // Handle unavailable authentication services.
+      setError("Impossible de joindre le serveur.");
     }
   };
 

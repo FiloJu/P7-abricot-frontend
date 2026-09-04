@@ -8,13 +8,16 @@ import Image from "next/image";
 
 export default function Navbar() {
   const pathname = usePathname();
+
+  // Read the auth cookie only in the browser.
   const token =
-    typeof document === "undefined" ? undefined : Cookies.get("token");
+    typeof document === "undefined" ? undefined : Cookies.get("auth_token");
   const isAuthenticated = !!token;
 
   const [userInitials, setUserInitials] = useState("");
 
   useEffect(() => {
+    // Load the profile used to build the avatar label.
     const fetchUserInfos = async () => {
       if (!token) return;
       try {
@@ -25,6 +28,7 @@ export default function Navbar() {
         if (res.ok) {
           const json = await res.json();
 
+          // Support the response shapes currently returned by the API.
           const userData = json.data?.user || json.data || json.user || json;
 
           const firstName = userData.firstName || "";
@@ -32,6 +36,7 @@ export default function Navbar() {
           const fullName = userData.name || `${firstName} ${lastName}`.trim();
 
           if (fullName) {
+            // Prefer two initials and fall back to the first two characters.
             const parts = fullName.split(" ");
             const initials =
               parts.length > 1
@@ -49,9 +54,11 @@ export default function Navbar() {
     fetchUserInfos();
   }, [pathname, token]);
 
+  // Hide navigation on public pages and for signed-out users.
   if (pathname === "/login" || pathname === "/register") return null;
   if (!isAuthenticated) return null;
 
+  // Highlight the current section in the navigation.
   const isActive = (path: string) => pathname.startsWith(path);
   const isProfilePage = pathname === "/profile";
 
