@@ -16,7 +16,7 @@ export default function ProfilePage() {
 
     useEffect(() => {
         const fetchUserProfile = async () => {
-            const token = Cookies.get('token');
+            const token = Cookies.get('auth_token') || Cookies.get('token');
             if (!token) {
                 setLoading(false);
                 return;
@@ -53,7 +53,7 @@ export default function ProfilePage() {
     const handleUpdateProfile = async () => {
         setSuccessMessage('');
         setErrorMessage('');
-        const token = Cookies.get('token');
+        const token = Cookies.get('auth_token') || Cookies.get('token');
 
         const updateData: any = {
             name: `${editFirstName} ${editLastName}`.trim(),
@@ -115,7 +115,8 @@ export default function ProfilePage() {
                             type="text"
                             value={editLastName}
                             onChange={(e) => setEditLastName(e.target.value)}
-                            className="w-full lg:max-w-[1097px] h-[53px] border border-[#E5E7EB] rounded-[4px] px-[17px] text-[14px] text-[#1F1F1F] bg-[#FFFFFF] outline-none focus:border-[#D3590B] transition"
+                            placeholder="Nom"
+                            className="w-full lg:max-w-[1097px] h-[53px] border border-[#E5E7EB] rounded-[4px] px-[17px] text-[14px] text-[#9CA3AF] placeholder:text-[#9CA3AF] bg-[#FFFFFF] outline-none focus:border-[#D3590B] transition"
                         />
                     </div>
 
@@ -126,7 +127,8 @@ export default function ProfilePage() {
                             type="text"
                             value={editFirstName}
                             onChange={(e) => setEditFirstName(e.target.value)}
-                            className="w-full lg:max-w-[1097px] h-[53px] border border-[#E5E7EB] rounded-[4px] px-[17px] text-[14px] text-[#1F1F1F] bg-[#FFFFFF] outline-none focus:border-[#D3590B] transition"
+                            placeholder="Prénom"
+                            className="w-full lg:max-w-[1097px] h-[53px] border border-[#E5E7EB] rounded-[4px] px-[17px] text-[14px] text-[#9CA3AF] placeholder:text-[#9CA3AF] bg-[#FFFFFF] outline-none focus:border-[#D3590B] transition"
                         />
                     </div>
 
@@ -137,7 +139,8 @@ export default function ProfilePage() {
                             type="email"
                             value={editEmail}
                             onChange={(e) => setEditEmail(e.target.value)}
-                            className="w-full lg:max-w-[1097px] h-[53px] border border-[#E5E7EB] rounded-[4px] px-[17px] text-[14px] text-[#1F1F1F] bg-[#FFFFFF] outline-none focus:border-[#D3590B] transition"
+                            placeholder="Adresse email"
+                            className="w-full lg:max-w-[1097px] h-[53px] border border-[#E5E7EB] rounded-[4px] px-[17px] text-[14px] text-[#9CA3AF] placeholder:text-[#9CA3AF] bg-[#FFFFFF] outline-none focus:border-[#D3590B] transition"
                         />
                     </div>
 
@@ -149,7 +152,7 @@ export default function ProfilePage() {
                             value={newPassword}
                             onChange={(e) => setNewPassword(e.target.value)}
                             placeholder="●●●●●●●●●●●"
-                            className="w-full lg:max-w-[1097px] h-[53px] border border-[#E5E7EB] rounded-[4px] px-[17px] text-[14px] text-[#1F1F1F] tracking-widest outline-none focus:border-[#D3590B] transition"
+                            className="w-full lg:max-w-[1097px] h-[53px] border border-[#E5E7EB] rounded-[4px] px-[17px] text-[14px] text-[#1F1F1F] placeholder:text-[#9CA3AF] tracking-widest outline-none focus:border-[#D3590B] transition"
                         />
                     </div>
 
