@@ -3,17 +3,17 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 
 export default function Navbar() {
   const pathname = usePathname();
-
-  // Read the auth cookie only in the browser.
-  const token =
-    typeof document === "undefined" ? undefined : Cookies.get("auth_token");
-  const isAuthenticated = !!token;
-
+  const token = useSyncExternalStore(
+    () => () => {},
+    () => Cookies.get("auth_token"),
+    () => undefined,
+  );
+  const isAuthenticated = Boolean(token);
   const [userInitials, setUserInitials] = useState("");
 
   useEffect(() => {
