@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import Image from "next/image";
 import ProjectCreationModal from "@/components/ProjectCreationModal";
 
 export default function DashboardPage() {
+  const router = useRouter();
 
   const [tasks, setTasks] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,9 +22,14 @@ export default function DashboardPage() {
   );
 
   useEffect(() => {
+    const token = Cookies.get('auth_token') || Cookies.get('token');
+
+    if (!token) {
+      router.replace('/login');
+      return;
+    }
+
     const fetchData = async () => {
-      const token = Cookies.get('auth_token') || Cookies.get('token');
-      if (!token) return;
 
       // Fetch the user profile
       try {
@@ -61,7 +68,7 @@ export default function DashboardPage() {
     };
 
     fetchData();
-  }, []);
+  }, [router]);
 
   const formatStatus = (status: string) => {
     if (status === 'TODO') return 'À faire';

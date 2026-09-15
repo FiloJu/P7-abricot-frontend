@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -23,6 +24,7 @@ interface Project {
 }
 
 export default function ProjectsPage() {
+  const router = useRouter();
 
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
@@ -33,12 +35,15 @@ export default function ProjectsPage() {
   // Fetch data on mount
 
   useEffect(() => {
+    const token = Cookies.get('auth_token') || Cookies.get('token');
+
+    if (!token) {
+      router.replace('/login');
+      setLoading(false);
+      return;
+    }
+
     const fetchAllData = async () => {
-      const token = Cookies.get('auth_token') || Cookies.get('token');
-      if (!token) {
-        setLoading(false);
-        return;
-      }
 
       // FETCH USER PROFILE
       try {
@@ -99,7 +104,7 @@ export default function ProjectsPage() {
     };
 
     fetchAllData(); // Start the function
-  }, []); // Empty dependency array
+  }, [router]);
 
 
   // --- PROJECT FILTER ---

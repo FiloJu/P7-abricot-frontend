@@ -1,9 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 
 export default function ProfilePage() {
+    const router = useRouter();
     const [user, setUser] = useState<any>(null);
     const [loading, setLoading] = useState(true);
 
@@ -15,12 +17,15 @@ export default function ProfilePage() {
     const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
+        const token = Cookies.get('auth_token') || Cookies.get('token');
+
+        if (!token) {
+            router.replace('/login');
+            setLoading(false);
+            return;
+        }
+
         const fetchUserProfile = async () => {
-            const token = Cookies.get('auth_token') || Cookies.get('token');
-            if (!token) {
-                setLoading(false);
-                return;
-            }
 
             try {
                 const res = await fetch('http://localhost:8000/auth/profile', {
@@ -48,7 +53,13 @@ export default function ProfilePage() {
         };
 
         fetchUserProfile();
-    }, []);
+    }, [router]);
+
+    const handleLogout = () => {
+        Cookies.remove('auth_token', { path: '/' });
+        Cookies.remove('token', { path: '/' });
+        window.location.href = '/login';
+    };
 
     const handleUpdateProfile = async () => {
         setSuccessMessage('');
@@ -158,14 +169,25 @@ export default function ProfilePage() {
 
                 </div>
 
-                <button
-                    onClick={handleUpdateProfile}
-                    className="w-full lg:w-[242px] h-[50px] bg-[#1F1F1F] rounded-[10px] flex items-center justify-center cursor-pointer hover:bg-black transition self-start"
-                >
-                    <span className="text-[14px] lg:text-[16px] text-[#FFFFFF] font-regular font-inter">
-                        Modifier les informations
-                    </span>
-                </button>
+                <div className="flex flex-col lg:flex-row lg:justify-between lg:items-end gap-4 mt-4">
+                    <button
+                        onClick={handleUpdateProfile}
+                        className="w-full lg:w-[242px] h-[50px] bg-[#1F1F1F] rounded-[10px] flex items-center justify-center cursor-pointer hover:bg-black transition self-start"
+                    >
+                        <span className="text-[14px] lg:text-[16px] text-[#FFFFFF] font-regular font-inter">
+                            Modifier les informations
+                        </span>
+                    </button>
+
+                    <button
+                        onClick={handleLogout}
+                        className="w-full lg:w-[242px] h-[50px] bg-[#FFE8D9] text-[#D3590B] rounded-[10px] flex items-center justify-center cursor-pointer hover:bg-[#FFDCC2] transition self-start lg:self-end"
+                    >
+                        <span className="text-[14px] lg:text-[16px] font-regular font-inter">
+                            Déconnexion
+                        </span>
+                    </button>
+                </div>
 
             </div>
         </div>

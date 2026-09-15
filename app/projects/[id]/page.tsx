@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
 
 interface ProjectMember {
   id?: string;
@@ -41,19 +41,22 @@ function getInitials(user: ProjectMember) {
 }
 
 export default function ProjectDetailPage() {
+  const router = useRouter();
   const { id } = useParams<{ id: string }>();
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
+    const token = Cookies.get('auth_token') || Cookies.get('token');
+
+    if (!token) {
+      router.replace('/login');
+      setLoading(false);
+      return;
+    }
+
     const fetchProject = async () => {
-      const token = Cookies.get('auth_token') || Cookies.get('token');
-      if (!token || !id) {
-        setError('Projet introuvable.');
-        setLoading(false);
-        return;
-      }
 
       try {
         const response = await fetch(`http://localhost:8000/projects/${id}`, {
@@ -74,7 +77,7 @@ export default function ProjectDetailPage() {
     };
 
     fetchProject();
-  }, [id]);
+  }, [id, router]);
 
   if (loading) return <div className="p-10 text-center font-sans">Chargement du projet...</div>;
   if (error || !project) return <div className="p-10 text-center font-sans text-red-500">{error || 'Projet introuvable.'}</div>;

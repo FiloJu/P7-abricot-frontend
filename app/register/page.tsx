@@ -28,8 +28,15 @@ export default function RegisterPage() {
             const data = await response.json();
 
             if (response.ok) {
-                if (data.data && data.data.token) {
-                    Cookies.set('token', data.data.token, { expires: 1 });
+                const authToken =
+                    data?.data?.token ||
+                    data?.token ||
+                    data?.data?.accessToken ||
+                    data?.accessToken;
+
+                if (authToken) {
+                    Cookies.set('auth_token', authToken, { expires: 1, path: '/' });
+                    Cookies.set('token', authToken, { expires: 1, path: '/' });
                     router.push('/dashboard');
                 } else {
                     router.push('/login');

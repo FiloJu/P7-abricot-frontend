@@ -30,7 +30,17 @@ export default function LoginPage() {
 
       if (response.ok) {
         // Keep the token for authenticated requests and redirect the user.
-        Cookies.set("auth_token", data.data.token, { expires: 1 });
+        const authToken =
+          data?.data?.token ||
+          data?.token ||
+          data?.data?.accessToken ||
+          data?.accessToken;
+
+        if (authToken) {
+          Cookies.set("auth_token", authToken, { expires: 1, path: "/" });
+          Cookies.set("token", authToken, { expires: 1, path: "/" });
+        }
+
         router.push("/dashboard");
       } else {
         // Display the API message when the credentials are rejected.
