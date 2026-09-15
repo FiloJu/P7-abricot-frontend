@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import type { FormEvent } from 'react';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
 
@@ -54,7 +55,7 @@ export default function ProjectCreationModal({ isOpen, onClose }: ProjectCreatio
 
   if (!isOpen) return null;
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const token = Cookies.get('auth_token') || Cookies.get('token');
