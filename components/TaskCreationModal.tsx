@@ -12,6 +12,10 @@ interface TaskCreationModalProps {
   contributors: any[]; 
 }
 
+function getContributorId(contributor: any) {
+  return contributor.user?.id || contributor.userId || contributor.id;
+}
+
 export default function TaskCreationModal({ isOpen, onClose, projectId, contributors = [] }: TaskCreationModalProps) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -28,7 +32,7 @@ export default function TaskCreationModal({ isOpen, onClose, projectId, contribu
     e.preventDefault();
     if (!projectId) return;
     try {
-      const token = Cookies.get('token');
+      const token = Cookies.get('auth_token') || Cookies.get('token');
 
       // Translate the status into the backend format.
       let backendStatus = "TODO";
@@ -57,9 +61,9 @@ export default function TaskCreationModal({ isOpen, onClose, projectId, contribu
         onClose();
         window.location.reload(); // Refresh the page to display the new task.
       } else {
-        const errorData = await response.json();
+        const errorData = await response.json().catch(() => null);
         console.error("Erreur backend:", errorData);
-        alert("Erreur lors de la création de la tâche.");
+        alert(errorData?.message || "Erreur lors de la création de la tâche.");
       }
     } catch (error) {
       console.error("Erreur réseau:", error);
@@ -163,7 +167,7 @@ export default function TaskCreationModal({ isOpen, onClose, projectId, contribu
                 ) : (
                   // Display the selected people.
                   selectedAssignees.map(id => {
-                    const person = contributors.find((c: any) => c.id === id || c.userId === id);
+                    const person = contributors.find((c: any) => getContributorId(c) === id);
                     const name = person?.name || person?.user?.name || "Inconnu";
                     return (
                       <span key={id} className="bg-[#E5E7EB] text-[#1F1F1F] px-[8px] py-[2px] rounded-[4px]">
@@ -182,7 +186,7 @@ export default function TaskCreationModal({ isOpen, onClose, projectId, contribu
                 <div className="absolute top-[58px] left-0 w-full bg-white border border-[#E5E7EB] rounded-[4px] shadow-md z-10 max-h-[150px] overflow-y-auto">
                   {contributors && contributors.length > 0 ? (
                     contributors.map((contributor: any, index: number) => {
-                      const targetId = contributor.userId || contributor.id;
+                      const targetId = getContributorId(contributor);
                       const fullName = contributor.name || contributor.user?.name || `${contributor.firstName || ''} ${contributor.lastName || ''}`.trim() || 'Inconnu';
                       const isSelected = selectedAssignees.includes(targetId);
 

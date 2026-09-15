@@ -13,6 +13,10 @@ interface TaskEditModalProps {
   task?: any; 
 }
 
+function getContributorId(contributor: any) {
+  return contributor.user?.id || contributor.userId || contributor.id;
+}
+
 export default function TaskEditModal({ isOpen, onClose, task, projectId, contributors = [] }: TaskEditModalProps) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -38,7 +42,7 @@ export default function TaskEditModal({ isOpen, onClose, task, projectId, contri
         // Extract the assignee IDs.
         const assigneeIds = task.assignees.map((a: any) => {
           if (typeof a === 'string') return a;
-          return a.userId || a.user?.id || a.id;
+          return a.userId || a.user_id || a.user?.id || a.id;
         });
         setSelectedAssignees(assigneeIds.filter(Boolean));
       } else {
@@ -61,7 +65,7 @@ export default function TaskEditModal({ isOpen, onClose, task, projectId, contri
     if (!projectId || !task?.id) return;
 
     try {
-      const token = Cookies.get('token');
+      const token = Cookies.get('auth_token') || Cookies.get('token');
 
       const response = await fetch(`http://localhost:8000/projects/${projectId}/tasks/${task.id}`, {
         method: 'DELETE',
@@ -89,7 +93,7 @@ export default function TaskEditModal({ isOpen, onClose, task, projectId, contri
     e.preventDefault();
     if (!projectId || !task?.id) return;
     try {
-      const token = Cookies.get('token');
+      const token = Cookies.get('auth_token') || Cookies.get('token');
       let backendStatus = "TODO";
       if (status === "En cours") backendStatus = "IN_PROGRESS";
       if (status === "Terminée") backendStatus = "DONE";
@@ -115,9 +119,9 @@ export default function TaskEditModal({ isOpen, onClose, task, projectId, contri
         onClose();
         window.location.reload();
       } else {
-        const errorData = await response.json();
+        const errorData = await response.json().catch(() => null);
         console.error("Erreur backend:", errorData);
-        alert("Erreur lors de la modification de la tâche.");
+        alert(errorData?.message || "Erreur lors de la modification de la tâche.");
       }
     } catch (error) {
       console.error("Erreur réseau:", error);
@@ -242,7 +246,7 @@ export default function TaskEditModal({ isOpen, onClose, task, projectId, contri
                 <div role="listbox" className="absolute top-[70px] left-0 w-full bg-white border border-[#E5E7EB] rounded-[4px] shadow-md z-10 max-h-[150px] overflow-y-auto">
                   {contributors && contributors.length > 0 ? (
                     contributors.map((contributor: any, index: number) => {
-                      const targetId = contributor.userId || contributor.id;
+                      const targetId = getContributorId(contributor);
 
                       const fullName = contributor.name || contributor.user?.name || `${contributor.firstName || ''} ${contributor.lastName || ''}`.trim() || `${contributor.user?.firstName || ''} ${contributor.user?.lastName || ''}`.trim();
                       const nameToDisplay = fullName ? fullName : "Inconnu";
