@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import type { FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -12,7 +13,7 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const handleLogin = async (e: React.FormEvent) => {
+    const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     // Submit credentials to the authentication endpoint.
     e.preventDefault();
     setError("");

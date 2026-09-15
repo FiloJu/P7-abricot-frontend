@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import type { FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
@@ -12,7 +13,7 @@ export default function RegisterPage() {
     const [error, setError] = useState('');
     const router = useRouter();
 
-    const handleRegister = async (e: React.FormEvent) => {
+    const handleRegister = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError('');
 
