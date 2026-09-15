@@ -30,7 +30,7 @@ interface ProjectTask {
     description?: string;
     status?: string;
     dueDate?: string;
-    assignees?: Array<ProjectMember & { userId?: string }>;
+    assignees?: Array<(ProjectMember & { userId?: string; user_id?: string }) | string>;
     comments?: TaskComment[];
 }
 
@@ -74,6 +74,11 @@ function formatStatus(status?: string) {
     if (status === 'IN_PROGRESS') return 'En cours';
     if (status === 'DONE' || status === 'Terminée') return 'Terminée';
     return 'À faire';
+}
+
+function getAssigneeId(assignee: NonNullable<ProjectTask['assignees']>[number]) {
+    if (typeof assignee === 'string') return assignee;
+    return assignee.userId || assignee.user_id || assignee.user?.id || assignee.id;
 }
 
 export default function ProjectDetailPage() {
@@ -246,7 +251,7 @@ export default function ProjectDetailPage() {
                                             type="button"
                                             onClick={handleDeleteProject}
                                             disabled={isDeletingProject}
-                                            className="text-[#EF4444] text-[12px] lg:text-[14px] font-regular underline hover:opacity-80 transition font-inter disabled:opacity-50 disabled:cursor-not-allowed"
+                                            className="h-[25px] px-[16px] bg-[#FFE0E0] rounded-[50px] flex items-center justify-center text-[#EF4444] text-[12px] lg:text-[14px] font-regular hover:opacity-80 transition font-inter disabled:opacity-50 disabled:cursor-not-allowed"
                                         >
                                             {isDeletingProject ? 'Suppression...' : 'Supprimer'}
                                         </button>
@@ -427,8 +432,10 @@ export default function ProjectDetailPage() {
                                             <div className="flex flex-wrap items-center gap-2 lg:gap-[8px] text-[10px] lg:text-[12px] text-[#6B7280] font-regular mb-4 lg:mb-0 font-inter">
                                                 <span>Assigné à :</span>
                                                 {task.assignees && task.assignees.map((assigneeObj, index: number) => {
-                                                    const targetId = assigneeObj.userId || assigneeObj.id;
-                                                    const userProfile = assigneeObj.user || contributors.find((contributor) => contributor.id === targetId) || assigneeObj;
+                                                    const targetId = getAssigneeId(assigneeObj);
+                                                    const userProfile: ProjectMember = typeof assigneeObj === 'string'
+                                                        ? contributors.find((contributor) => contributor.id === targetId) || {}
+                                                        : assigneeObj.user || contributors.find((contributor) => contributor.id === targetId) || assigneeObj;
                                                     const fullName = userProfile.name || `${userProfile.firstName || ''} ${userProfile.lastName || ''}`.trim() || 'Inconnu';
                                                     const initials = fullName !== 'Inconnu' ? fullName.split(' ').map((n: string) => n[0]).join('').toUpperCase().substring(0, 2) : 'U';
 
