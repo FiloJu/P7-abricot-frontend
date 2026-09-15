@@ -60,8 +60,10 @@ export default function Navbar() {
   }, [pathname, token]);
 
   // Show the navigation only on authenticated app pages.
-  const allowedPaths = ["/dashboard", "/profile"];
-  const shouldShowNavbar = allowedPaths.includes(pathname) && isAuthenticated;
+  const allowedPaths = ["/dashboard", "/projects", "/profile"];
+  const shouldShowNavbar = allowedPaths.some(
+    (path) => pathname === path || pathname.startsWith(`${path}/`)
+  ) && isAuthenticated;
 
   if (!shouldShowNavbar) return null;
 
