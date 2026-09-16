@@ -52,7 +52,7 @@ export default function TaskCreationModal({ isOpen, onClose, projectId, contribu
           // Convert the date to ISO format.
           dueDate: dueDate ? new Date(dueDate).toISOString() : null,
           // Send the actual user IDs.
-          assignees: selectedAssignees
+          assigneeIds: selectedAssignees
         })
       });
 

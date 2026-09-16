@@ -110,7 +110,7 @@ export default function TaskEditModal({ isOpen, onClose, task, projectId, contri
           description: description,
           status: backendStatus,
           dueDate: dueDate ? new Date(dueDate).toISOString() : null,
-          assignees: selectedAssignees
+          assigneeIds: selectedAssignees
         })
       });
 
