@@ -234,12 +234,12 @@ export default function ProjectDetailPage() {
                     </Link>
 
                     {/* HEADER CONTENT: Title/Description on the left, Buttons on the right */}
-                    <div className="flex flex-col lg:flex-row justify-between items-start w-full gap-4 lg:gap-0">
+                        <div className="flex flex-col lg:flex-row justify-between items-start min-w-0 w-full gap-4 lg:gap-0">
 
                         {/* LEFT: Title, Edit, and Description */}
-                        <div className="flex flex-col w-full lg:w-auto">
+                            <div className="flex flex-col min-w-0 w-full lg:w-auto">
                             <div className="flex flex-wrap items-center gap-[14px] mb-[8px]">
-                                <h1 className="text-[20px] lg:text-[24px] font-semibold text-[#1F1F1F] font-manrope">
+                                <h1 className="break-words text-[20px] lg:text-[24px] font-semibold text-[#1F1F1F] font-manrope">
                                     {project ? project.title || project.name : "Chargement..."}
                                 </h1>
                                 {isOwner && (
@@ -258,13 +258,13 @@ export default function ProjectDetailPage() {
                                     </div>
                                 )}
                             </div>
-                            <p className="text-[14px] lg:text-[18px] text-[#6B7280] font-regular font-inter">
+                            <p className="break-words text-[14px] lg:text-[18px] text-[#6B7280] font-regular font-inter">
                                 {project ? project.description : "Aucune description pour ce projet."}
                             </p>
                         </div>
 
                         {/* RIGHT: Create button */}
-                        <div className="flex gap-[12px] h-[50px]  mr-18 w-full lg:w-auto mt-4 lg:mt-0">
+                        <div className="flex gap-[12px] h-[50px] w-full lg:w-auto mt-4 lg:mt-0">
                             <button onClick={() => setIsCreateTaskModalOpen(true)} className="flex-1 lg:w-[141px] h-[50px] bg-[#1F1F1F] text-[#FFFFFF] rounded-[10px] text-[14px] lg:text-[16px] font-regular flex items-center justify-center hover:bg-black transition">
                                 Créer une tâche
                             </button>
@@ -273,7 +273,7 @@ export default function ProjectDetailPage() {
                 </div>
 
                 {/* CONTRIBUTORS BAR */}
-                <div className="w-auto min-h-[67px] mr-16 ml-18 py-4 lg:py-0 bg-[#F3F4F6] rounded-[10px] flex flex-col lg:flex-row items-start lg:items-center justify-between px-4 lg:px-[40px] mt-4 lg:mt-0 gap-4 lg:gap-0">
+                <div className="w-full min-h-[67px] py-4 lg:py-0 bg-[#F3F4F6] rounded-[10px] flex flex-col lg:flex-row items-start lg:items-center justify-between px-4 lg:px-[40px] mt-4 lg:mt-0 gap-4 lg:gap-0">
 
                     {/* LEFT: Contributors text */}
                     <div className="flex items-center shrink-0">
@@ -284,7 +284,7 @@ export default function ProjectDetailPage() {
                     </div>
 
                     {/* RIGHT: Initials badges aligned to the right */}
-                    <div className="flex items-center gap-[8px] ml-50 shrink-0 overflow-x-auto hide-scrollbar max-w-full">
+                    <div className="flex items-center gap-[8px] w-full lg:w-auto ml-0 shrink-0 overflow-x-auto hide-scrollbar max-w-full pb-1">
 
                         {contributors && contributors.length > 0 ? (
                             contributors.map((contributor: ProjectMember, index: number) => {
@@ -294,11 +294,11 @@ export default function ProjectDetailPage() {
 
                                 if (index === 0) {
                                     return (
-                                        <div key={index} className="flex items-center gap-[5px] shrink-0">
+                                        <div key={index} className="flex items-center gap-[5px] shrink-0 max-w-[220px]">
                                             <div className="w-[27px] h-[27px] rounded-full bg-[#FFE8D9] flex items-center justify-center text-[#A63F06] text-[10px] font-semibold font-sans z-10">
                                                 {initials}
                                             </div>
-                                            <div className="h-[25px] px-[16px] bg-[#FFE8D9] rounded-[50px] flex items-center justify-center text-[#A63F06] text-[12px] lg:text-[14px] font-regular font-inter">
+                                            <div className="h-[25px] max-w-[170px] px-[16px] bg-[#FFE8D9] rounded-[50px] flex items-center justify-center text-[#A63F06] text-[12px] lg:text-[14px] font-regular truncate font-inter">
                                                 {fullName}
                                             </div>
                                         </div>
@@ -306,11 +306,11 @@ export default function ProjectDetailPage() {
                                 }
 
                                 return (
-                                    <div key={index} className="flex items-center gap-[5px] shrink-0">
+                                    <div key={index} className="flex items-center gap-[5px] shrink-0 max-w-[220px]">
                                         <div className="w-[27px] h-[27px] rounded-full bg-[#E5E7EB] border border-[#FFFFFF] flex items-center justify-center text-[#0F0F0F] text-[10px] font-regular font-sans z-10">
                                             {initials}
                                         </div>
-                                        <div className="h-[25px] px-[16px] bg-[#E5E7EB] rounded-[50px] flex items-center justify-center text-[#374151] text-[12px] lg:text-[14px] font-regular font-inter">
+                                        <div className="h-[25px] max-w-[170px] px-[16px] bg-[#E5E7EB] rounded-[50px] flex items-center justify-center text-[#374151] text-[12px] lg:text-[14px] font-regular truncate font-inter">
                                             {fullName}
                                         </div>
                                     </div>
@@ -398,16 +398,16 @@ export default function ProjectDetailPage() {
                             const frenchStatus = formatStatus(task.status);
 
                             return (
-                                <div key={task.id} className="w-full min-h-[263.54px] h-auto px-4 lg:px-[40px] bg-[#FFFFFF] border border-[#E5E7EB] rounded-[10px] flex flex-col hover:shadow-sm transition-shadow overflow-hidden">
+                                <div key={task.id} className="w-full min-h-[263.54px] h-auto min-w-0 px-4 lg:px-[40px] bg-[#FFFFFF] border border-[#E5E7EB] rounded-[10px] flex flex-col hover:shadow-sm transition-shadow overflow-hidden">
 
                                     {/* CARD HEADER */}
                                     <div className="py-4 lg:p-[25px] flex flex-col lg:flex-row justify-between items-start">
 
-                                        <div className="flex flex-col w-full lg:max-w-[942px]">
+                                        <div className="flex flex-col min-w-0 w-full lg:max-w-[942px]">
 
                                             {/* Title + status badge */}
                                             <div className="flex flex-wrap items-center gap-2 lg:gap-[8px] mb-2 lg:mb-[7px]">
-                                                <h3 className="text-[16px] lg:text-[18px] font-semibold text-[#000000] font-manrope">
+                                                <h3 className="break-words text-[16px] lg:text-[18px] font-semibold text-[#000000] font-manrope">
                                                     {task.title}
                                                 </h3>
                                                 {frenchStatus === "À faire" ? (
@@ -507,7 +507,7 @@ export default function ProjectDetailPage() {
                                                             </div>
 
                                                             <div className="flex-1 bg-[#F3F4F6] min-h-[60px] lg:min-h-[83px] rounded-[10px] pt-[12px] lg:pt-[18px] px-3 lg:px-[14px] pb-[12px] lg:pb-[18px] flex flex-col justify-center">
-                                                                <div className="flex justify-between items-center w-full mb-[8px]">
+                                                                <div className="flex flex-wrap justify-between items-center gap-2 w-full mb-[8px]">
                                                                     <div className="flex items-center gap-[10px]">
                                                                         <span className="text-[#000000] text-[12px] lg:text-[14px] font-normal truncate max-w-[120px] lg:max-w-none font-inter">{authorName}</span>
                                                                     </div>

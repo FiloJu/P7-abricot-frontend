@@ -86,7 +86,7 @@ export default function ProjectCreationModal({ isOpen, onClose }: ProjectCreatio
 
   return (
     <div className="fixed inset-0 bg-gray-500/20 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-[10px] w-full max-w-[598px] h-auto lg:h-[616px] relative pt-[60px] lg:pt-[79px] px-6 lg:px-[73px] shadow-xl font-sans flex flex-col">
+      <div className="bg-white rounded-[10px] w-full max-w-[598px] max-h-[calc(100dvh-2rem)] overflow-y-auto h-auto lg:h-[616px] relative pt-[60px] lg:pt-[79px] px-5 sm:px-6 lg:px-[73px] pb-6 lg:pb-0 shadow-xl font-sans flex flex-col">
 
         <button onClick={onClose} className="absolute top-[20px] lg:top-[37px] right-[20px] lg:right-[38.67px] hover:opacity-70 transition flex items-center justify-center">
           <Image src="/cross.svg" alt="Fermer" width={14} height={14} />

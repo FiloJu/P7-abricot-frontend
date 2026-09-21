@@ -72,15 +72,15 @@ export default function Navbar() {
   const isProfilePage = pathname === "/profile";
 
   return (
-        <nav className="w-full min-h-[94px] h-auto bg-[#FFFFFF] border-b border-gray-100 flex flex-wrap lg:flex-nowrap items-center justify-between px-4 py-4 lg:py-0 lg:px-[100px] relative font-sans">
+        <nav className="w-full min-h-[76px] lg:min-h-[94px] h-auto bg-[#FFFFFF] border-b border-gray-100 flex flex-wrap lg:flex-nowrap items-center justify-between px-3 py-3 sm:px-4 sm:py-4 lg:py-0 lg:px-[100px] relative font-sans">
 
             <div className="flex-shrink-0">
                 <Link href="/dashboard" aria-label="Redirection vers tableau de bord">
-                    <Image src="/logoabricot.svg" alt="Logo Abricot" width={147} height={37} priority className="w-[100px] lg:w-[147px] h-auto" />
+                  <Image src="/logoabricot.svg" alt="Logo Abricot" width={147} height={37} priority className="w-[88px] sm:w-[100px] lg:w-[147px] h-auto" />
                 </Link>
             </div>
 
-            <div className="flex items-center justify-center gap-2 lg:gap-[16px] w-full lg:w-[512px] h-[50px] lg:h-[78px] order-last lg:order-none mt-4 lg:mt-0 lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2">
+            <div className="flex items-center justify-center gap-1 sm:gap-2 lg:gap-[16px] w-full lg:w-[512px] h-[44px] sm:h-[50px] lg:h-[78px] order-last lg:order-none mt-3 lg:mt-0 lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2">
                 <Link
                     href="/dashboard"
                     className={`flex items-center justify-center gap-2 lg:gap-[10px] flex-1 lg:w-[248px] h-full rounded-[10px] transition-colors ${isActive('/dashboard') ? 'bg-[#0F0F0F] text-[#FFFFFF]' : 'bg-[#FFFFFF] text-[#A63F06] hover:bg-orange-50'}`}

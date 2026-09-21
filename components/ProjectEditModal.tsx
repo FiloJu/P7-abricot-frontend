@@ -77,7 +77,7 @@ export default function ProjectEditModal({ isOpen, onClose, project }: ProjectEd
 
     return (
         <div className="fixed inset-0 bg-gray-500/20 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-[10px] w-full max-w-[598px] min-h-[500px] lg:h-[616px] relative pt-[60px] lg:pt-[79px] px-6 lg:px-[73px] pb-[40px] lg:pb-[79px] shadow-xl font-sans flex flex-col hide-scrollbar overflow-y-auto">
+            <div className="bg-white rounded-[10px] w-full max-w-[598px] max-h-[calc(100dvh-2rem)] min-h-[500px] lg:h-[616px] relative pt-[60px] lg:pt-[79px] px-5 sm:px-6 lg:px-[73px] pb-[40px] lg:pb-[79px] shadow-xl font-sans flex flex-col hide-scrollbar overflow-y-auto">
 
                 <button
                     onClick={onClose}
