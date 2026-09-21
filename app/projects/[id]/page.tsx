@@ -206,7 +206,7 @@ export default function ProjectDetailPage() {
                 <p className="text-[14px] lg:text-[16px] text-[#6B7280] mb-[20px] text-center font-inter">
                     Vous n&apos;êtes ni administrateur ni contributeur de ce projet.
                 </p>
-                <Link href="/dashboard" className="w-[200px] h-[50px] bg-[#D3590B] text-[#FFFFFF] rounded-[10px] flex items-center justify-center hover:opacity-90 transition">
+                <Link href="/dashboard" className="w-[200px] h-[50px] bg-[#A63F06] text-[#FFFFFF] rounded-[10px] flex items-center justify-center hover:opacity-90 transition">
                     Retour au tableau de bord
                 </Link>
             </div>
@@ -244,14 +244,14 @@ export default function ProjectDetailPage() {
                                 </h1>
                                 {isOwner && (
                                     <div className="flex items-center gap-[14px]">
-                                        <button onClick={() => setIsEditModalOpen(true)} className="text-[#D3590B] text-[12px] lg:text-[14px] font-regular underline hover:opacity-80 transition font-inter">
+                                        <button onClick={() => setIsEditModalOpen(true)} className="text-[#A63F06] text-[12px] lg:text-[14px] font-regular underline hover:opacity-80 transition font-inter">
                                             Modifier
                                         </button>
                                         <button
                                             type="button"
                                             onClick={handleDeleteProject}
                                             disabled={isDeletingProject}
-                                            className="h-[25px] px-[16px] bg-[#FFE0E0] rounded-[50px] flex items-center justify-center text-[#EF4444] text-[12px] lg:text-[14px] font-regular hover:opacity-80 transition font-inter disabled:opacity-50 disabled:cursor-not-allowed"
+                                            className="h-[25px] px-[16px] bg-[#FFE0E0] rounded-[50px] flex items-center justify-center text-[#991B1B] text-[12px] lg:text-[14px] font-regular hover:opacity-80 transition font-inter disabled:opacity-50 disabled:cursor-not-allowed"
                                         >
                                             {isDeletingProject ? 'Suppression...' : 'Supprimer'}
                                         </button>
@@ -278,7 +278,7 @@ export default function ProjectDetailPage() {
                     {/* LEFT: Contributors text */}
                     <div className="flex items-center shrink-0">
                         <span className="text-[16px] lg:text-[18px] text-[#1F1F1F] font-semibold mr-[8px] font-manrope">Contributeurs</span>
-                        <span className="text-[14px] lg:text-[16px] text-[#6B7280] font-inter">
+                        <span className="text-[14px] lg:text-[16px] text-[#374151] font-inter">
                             {contributors ? contributors.length : 0} personnes
                         </span>
                     </div>
@@ -295,10 +295,10 @@ export default function ProjectDetailPage() {
                                 if (index === 0) {
                                     return (
                                         <div key={index} className="flex items-center gap-[5px] shrink-0">
-                                            <div className="w-[27px] h-[27px] rounded-full bg-[#FFE8D9] flex items-center justify-center text-[#D3590B] text-[10px] font-semibold font-sans z-10">
+                                            <div className="w-[27px] h-[27px] rounded-full bg-[#FFE8D9] flex items-center justify-center text-[#A63F06] text-[10px] font-semibold font-sans z-10">
                                                 {initials}
                                             </div>
-                                            <div className="h-[25px] px-[16px] bg-[#FFE8D9] rounded-[50px] flex items-center justify-center text-[#D3590B] text-[12px] lg:text-[14px] font-regular font-inter">
+                                            <div className="h-[25px] px-[16px] bg-[#FFE8D9] rounded-[50px] flex items-center justify-center text-[#A63F06] text-[12px] lg:text-[14px] font-regular font-inter">
                                                 {fullName}
                                             </div>
                                         </div>
@@ -310,7 +310,7 @@ export default function ProjectDetailPage() {
                                         <div className="w-[27px] h-[27px] rounded-full bg-[#E5E7EB] border border-[#FFFFFF] flex items-center justify-center text-[#0F0F0F] text-[10px] font-regular font-sans z-10">
                                             {initials}
                                         </div>
-                                        <div className="h-[25px] px-[16px] bg-[#E5E7EB] rounded-[50px] flex items-center justify-center text-[#6B7280] text-[12px] lg:text-[14px] font-regular font-inter">
+                                        <div className="h-[25px] px-[16px] bg-[#E5E7EB] rounded-[50px] flex items-center justify-center text-[#374151] text-[12px] lg:text-[14px] font-regular font-inter">
                                             {fullName}
                                         </div>
                                     </div>
@@ -351,7 +351,7 @@ export default function ProjectDetailPage() {
                                 <div className="pl-2 lg:pl-[16px] pr-2 lg:pr-[14px] flex items-center justify-center">
                                     <Image src="/list.svg" alt="" aria-hidden="true" width={14} height={14} className="w-[12px] lg:w-[16px]" />
                                 </div>
-                                <span className="text-[#D3590B] text-[12px] lg:text-[14px] font-regular pr-2 lg:pr-0 font-inter">
+                                <span className="text-[#A63F06] text-[12px] lg:text-[14px] font-regular pr-2 lg:pr-0 font-inter">
                                     Liste
                                 </span>
                             </button>
@@ -360,7 +360,7 @@ export default function ProjectDetailPage() {
                                 <div className="pl-2 lg:pl-[16px] pr-2 lg:pr-[14px] flex items-center justify-center">
                                     <Image src="/logokanban.svg" alt="" aria-hidden="true" width={14} height={14} className="w-[12px] lg:w-[15px]" />
                                 </div>
-                                <span className="text-[#D3590B] text-[12px] lg:text-[14px] font-medium pr-2 lg:pr-0 font-inter">
+                                <span className="text-[#A63F06] text-[12px] lg:text-[14px] font-medium pr-2 lg:pr-0 font-inter">
                                     Calendrier
                                 </span>
                             </button>
@@ -411,11 +411,11 @@ export default function ProjectDetailPage() {
                                                     {task.title}
                                                 </h3>
                                                 {frenchStatus === "À faire" ? (
-                                                    <div className="w-auto lg:w-[75px] h-[25px] bg-[#FFE0E0] flex items-center justify-center text-[#EF4444] px-2 lg:px-[16px] py-[4px] rounded-[50px] text-[10px] lg:text-[14px] font-regular">{frenchStatus}</div>
+                                                    <div className="w-auto lg:w-[75px] h-[25px] bg-[#FFE0E0] flex items-center justify-center text-[#991B1B] px-2 lg:px-[16px] py-[4px] rounded-[50px] text-[10px] lg:text-[14px] font-regular">{frenchStatus}</div>
                                                 ) : frenchStatus === "En cours" ? (
-                                                    <div className="w-auto lg:w-[90px] h-[25px] bg-[#FFF0D7] flex items-center justify-center text-[#E08D00] px-2 lg:px-[16px] py-[4px] rounded-[50px] text-[10px] lg:text-[14px] font-regular">{frenchStatus}</div>
+                                                    <div className="w-auto lg:w-[90px] h-[25px] bg-[#FFF0D7] flex items-center justify-center text-[#9A3412] px-2 lg:px-[16px] py-[4px] rounded-[50px] text-[10px] lg:text-[14px] font-regular">{frenchStatus}</div>
                                                 ) : (
-                                                    <div className="w-auto lg:w-[94px] h-[25px] bg-[#F1FFF7] flex items-center justify-center text-[#27AE60] px-2 lg:px-[16px] py-[4px] rounded-[50px] text-[10px] lg:text-[14px] font-regular">{frenchStatus}</div>
+                                                    <div className="w-auto lg:w-[94px] h-[25px] bg-[#F1FFF7] flex items-center justify-center text-[#166534] px-2 lg:px-[16px] py-[4px] rounded-[50px] text-[10px] lg:text-[14px] font-regular">{frenchStatus}</div>
                                                 )}
                                             </div>
 
@@ -444,7 +444,7 @@ export default function ProjectDetailPage() {
                                                             <div className="w-[20px] h-[20px] lg:w-[27px] lg:h-[27px] rounded-full bg-[#E5E7EB] border border-[#FFFFFF] flex items-center justify-center text-[#0F0F0F] text-[8px] lg:text-[10px] font-regular font-sans z-10 shrink-0">
                                                                 {initials}
                                                             </div>
-                                                            <div className="h-[20px] lg:h-[25px] px-2 lg:px-[16px] bg-[#E5E7EB] rounded-[50px] flex items-center justify-center text-[#6B7280] text-[10px] lg:text-[14px] font-regular whitespace-nowrap font-inter">
+                                                            <div className="h-[20px] lg:h-[25px] px-2 lg:px-[16px] bg-[#E5E7EB] rounded-[50px] flex items-center justify-center text-[#374151] text-[10px] lg:text-[14px] font-regular whitespace-nowrap font-inter">
                                                                 {fullName}
                                                             </div>
                                                         </div>
@@ -552,7 +552,7 @@ export default function ProjectDetailPage() {
                                                         {/* SEND BUTTON */}
                                                         <button
                                                             onClick={() => handleAddComment(task.id)}
-                                                            className="w-full lg:w-[209px] h-[40px] lg:h-[50px] shrink-0 bg-[#E5E7EB] text-[#9CA3AF] rounded-[10px] text-[12px] lg:text-[14px] font-medium flex items-center justify-center transition hover:bg-[#D1D5DB] mt-3 lg:mt-[16px] font-inter"
+                                                            className="w-full lg:w-[209px] h-[40px] lg:h-[50px] shrink-0 bg-[#E5E7EB] text-[#374151] rounded-[10px] text-[12px] lg:text-[14px] font-medium flex items-center justify-center transition hover:bg-[#D1D5DB] mt-3 lg:mt-[16px] font-inter"
                                                         >
                                                             Envoyer
                                                         </button>

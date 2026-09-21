@@ -127,7 +127,7 @@ export default function ProfilePage() {
                             value={editLastName}
                             onChange={(e) => setEditLastName(e.target.value)}
                             placeholder="Nom"
-                            className="w-full lg:max-w-[1097px] h-[53px] border border-[#E5E7EB] rounded-[4px] px-[17px] text-[14px] text-[#9CA3AF] placeholder:text-[#9CA3AF] bg-[#FFFFFF] outline-none focus:border-[#D3590B] transition"
+                            className="w-full lg:max-w-[1097px] h-[53px] border border-[#E5E7EB] rounded-[4px] px-[17px] text-[14px] text-[#4B5563] placeholder:text-[#4B5563] bg-[#FFFFFF] outline-none focus:border-[#D3590B] transition"
                         />
                     </div>
 
@@ -139,7 +139,7 @@ export default function ProfilePage() {
                             value={editFirstName}
                             onChange={(e) => setEditFirstName(e.target.value)}
                             placeholder="Prénom"
-                            className="w-full lg:max-w-[1097px] h-[53px] border border-[#E5E7EB] rounded-[4px] px-[17px] text-[14px] text-[#9CA3AF] placeholder:text-[#9CA3AF] bg-[#FFFFFF] outline-none focus:border-[#D3590B] transition"
+                            className="w-full lg:max-w-[1097px] h-[53px] border border-[#E5E7EB] rounded-[4px] px-[17px] text-[14px] text-[#4B5563] placeholder:text-[#4B5563] bg-[#FFFFFF] outline-none focus:border-[#D3590B] transition"
                         />
                     </div>
 
@@ -151,7 +151,7 @@ export default function ProfilePage() {
                             value={editEmail}
                             onChange={(e) => setEditEmail(e.target.value)}
                             placeholder="Adresse email"
-                            className="w-full lg:max-w-[1097px] h-[53px] border border-[#E5E7EB] rounded-[4px] px-[17px] text-[14px] text-[#9CA3AF] placeholder:text-[#9CA3AF] bg-[#FFFFFF] outline-none focus:border-[#D3590B] transition"
+                            className="w-full lg:max-w-[1097px] h-[53px] border border-[#E5E7EB] rounded-[4px] px-[17px] text-[14px] text-[#4B5563] placeholder:text-[#4B5563] bg-[#FFFFFF] outline-none focus:border-[#D3590B] transition"
                         />
                     </div>
 
@@ -163,7 +163,7 @@ export default function ProfilePage() {
                             value={newPassword}
                             onChange={(e) => setNewPassword(e.target.value)}
                             placeholder="●●●●●●●●●●●"
-                            className="w-full lg:max-w-[1097px] h-[53px] border border-[#E5E7EB] rounded-[4px] px-[17px] text-[14px] text-[#1F1F1F] placeholder:text-[#9CA3AF] tracking-widest outline-none focus:border-[#D3590B] transition"
+                            className="w-full lg:max-w-[1097px] h-[53px] border border-[#E5E7EB] rounded-[4px] px-[17px] text-[14px] text-[#1F1F1F] placeholder:text-[#4B5563] tracking-widest outline-none focus:border-[#D3590B] transition"
                         />
                     </div>
 
@@ -181,7 +181,7 @@ export default function ProfilePage() {
 
                     <button
                         onClick={handleLogout}
-                        className="w-full lg:w-[242px] h-[50px] bg-[#FFE8D9] text-[#D3590B] rounded-[10px] flex items-center justify-center cursor-pointer hover:bg-[#FFDCC2] transition self-start lg:self-end"
+                        className="w-full lg:w-[242px] h-[50px] bg-[#FFE8D9] text-[#A63F06] rounded-[10px] flex items-center justify-center cursor-pointer hover:bg-[#FFDCC2] transition self-start lg:self-end"
                     >
                         <span className="text-[14px] lg:text-[16px] font-regular font-inter">
                             Déconnexion

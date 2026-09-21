@@ -174,7 +174,7 @@ export default function ProjectEditModal({ isOpen, onClose, project }: ProjectEd
                     </div>
 
                     <div className="mt-auto flex flex-col-reverse lg:flex-row items-center justify-between w-full gap-4">
-                        <button type="submit" className="w-full lg:w-[181px] h-[50px] bg-[#E5E7EB] text-[#9CA3AF] rounded-[10px] hover:bg-black transition">
+                        <button type="submit" className="w-full lg:w-[181px] h-[50px] bg-[#E5E7EB] text-[#374151] rounded-[10px] hover:bg-black transition">
                             Enregistrer
                         </button>
                     </div>

@@ -109,7 +109,7 @@ export default function DashboardPage() {
           tabIndex={0}
           onClick={() => setCurrentView('liste')}
           onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setCurrentView('liste'); }}
-          className={`w-[94px] h-[45px] rounded-[8px] flex items-center justify-center gap-[8px] cursor-pointer transition ${currentView === 'liste' ? 'bg-[#FFE8D9] text-[#D3590B]' : 'bg-[#FFFFFF] text-[#6B7280] border border-[#E5E7EB] hover:bg-gray-50'}`}
+          className={`w-[94px] h-[45px] rounded-[8px] flex items-center justify-center gap-[8px] cursor-pointer transition ${currentView === 'liste' ? 'bg-[#FFE8D9] text-[#A63F06]' : 'bg-[#FFFFFF] text-[#6B7280] border border-[#E5E7EB] hover:bg-gray-50'}`}
         >
           <Image src="/list.svg" alt="" aria-hidden="true" width={16} height={16} />
           <span className="text-[14px] font-medium font-inter">
@@ -123,7 +123,7 @@ export default function DashboardPage() {
           tabIndex={0}
           onClick={() => setCurrentView('kanban')}
           onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setCurrentView('kanban'); }}
-          className={`w-[111px] h-[45px] rounded-[8px] flex items-center justify-center gap-[8px] cursor-pointer transition ${currentView === 'kanban' ? 'bg-[#FFE8D9] text-[#D3590B]' : 'bg-[#FFFFFF] text-[#6B7280] border border-[#E5E7EB] hover:bg-gray-50'}`}
+          className={`w-[111px] h-[45px] rounded-[8px] flex items-center justify-center gap-[8px] cursor-pointer transition ${currentView === 'kanban' ? 'bg-[#FFE8D9] text-[#A63F06]' : 'bg-[#FFFFFF] text-[#6B7280] border border-[#E5E7EB] hover:bg-gray-50'}`}
         >
           <Image src="/logokanban.svg" alt="" aria-hidden="true" width={16} height={16} />
           <span className="text-[14px] font-medium font-inter">
@@ -232,15 +232,15 @@ export default function DashboardPage() {
 
                     {/* Dynamic status pill */}
                     {frenchStatus === "À faire" ? (
-                      <div className="bg-[#FEF2F2] text-[#EF4444] px-[16px] py-[4px] rounded-[40px] text-[12px] font-normal border border-transparent">
+                      <div className="bg-[#FEF2F2] text-[#B91C1C] px-[16px] py-[4px] rounded-[40px] text-[12px] font-normal border border-transparent">
                         <span className="sr-only">Statut : </span>{frenchStatus}
                       </div>
                     ) : frenchStatus === "En cours" ? (
-                      <div className="bg-[#FFF7ED] text-[#F97316] px-[16px] py-[4px] rounded-[40px] text-[12px] font-normal border border-transparent">
+                      <div className="bg-[#FFF7ED] text-[#C2410C] px-[16px] py-[4px] rounded-[40px] text-[12px] font-normal border border-transparent">
                         <span className="sr-only">Statut : </span>{frenchStatus}
                       </div>
                     ) : (
-                      <div className="bg-[#F0FDF4] text-[#22C55E] px-[16px] py-[4px] rounded-[40px] text-[12px] font-normal border border-transparent">
+                      <div className="bg-[#F0FDF4] text-[#15803D] px-[16px] py-[4px] rounded-[40px] text-[12px] font-normal border border-transparent">
                         <span className="sr-only">Statut : </span>{frenchStatus}
                       </div>
                     )}
@@ -271,7 +271,7 @@ export default function DashboardPage() {
 
             <div className="flex items-center gap-[8px] mb-[20px] lg:mb-[40px]">
               <h2 className="text-[16px] lg:text-[18px] font-semibold text-[#1F1F1F] font-manrope">À faire</h2>
-              <div className="w-[41px] h-[25px] bg-[#E5E7EB] rounded-[50px] flex items-center justify-center text-[12px] text-[#6B7280]" aria-label={`${todoTasks.length} tâches à faire`}>{todoTasks.length}</div>
+              <div className="w-[41px] h-[25px] bg-[#E5E7EB] rounded-[50px] flex items-center justify-center text-[12px] text-[#374151]" aria-label={`${todoTasks.length} tâches à faire`}>{todoTasks.length}</div>
             </div>
             <div className="flex flex-col gap-[20px] lg:gap-[41px] items-center">
               {todoTasks.map((task, index) => (
@@ -281,7 +281,7 @@ export default function DashboardPage() {
                       <h3 className="text-[16px] lg:text-[18px] font-semibold text-[#000000] mb-[7px] truncate font-manrope">{task.title}</h3>
                       <p className="text-[12px] lg:text-[14px] text-[#6B7280] line-clamp-2 font-inter">{task.description}</p>
                     </div>
-                    <div className="bg-[#FFE0E0] text-[#EF4444] px-2 lg:px-[16px] py-1 lg:py-[4px] rounded-[50px] text-[10px] lg:text-[14px] whitespace-nowrap shrink-0">
+                    <div className="bg-[#FFE0E0] text-[#991B1B] px-2 lg:px-[16px] py-1 lg:py-[4px] rounded-[50px] text-[10px] lg:text-[14px] whitespace-nowrap shrink-0">
                       <span className="sr-only">Statut : </span>À faire
                     </div>
                   </div>
@@ -328,7 +328,7 @@ export default function DashboardPage() {
 
             <div className="flex items-center gap-[8px] mb-[20px] lg:mb-[40px]">
               <h2 className="text-[16px] lg:text-[18px] font-semibold text-[#1F1F1F] font-manrope">En cours</h2>
-              <div className="w-[41px] h-[25px] bg-[#E5E7EB] rounded-[50px] flex items-center justify-center text-[12px] text-[#6B7280]" aria-label={`${inProgressTasks.length} tâches en cours`}>{inProgressTasks.length}</div>
+              <div className="w-[41px] h-[25px] bg-[#E5E7EB] rounded-[50px] flex items-center justify-center text-[12px] text-[#374151]" aria-label={`${inProgressTasks.length} tâches en cours`}>{inProgressTasks.length}</div>
             </div>
             <div className="flex flex-col gap-[20px] lg:gap-[41px] items-center">
               {inProgressTasks.map((task, index) => (
@@ -338,7 +338,7 @@ export default function DashboardPage() {
                       <h3 className="text-[16px] lg:text-[18px] font-semibold text-[#000000] mb-[7px] truncate font-manrope">{task.title}</h3>
                       <p className="text-[12px] lg:text-[14px] text-[#6B7280] line-clamp-2 font-inter">{task.description}</p>
                     </div>
-                    <div className="bg-[#FFF0D7] text-[#E08D00] px-2 lg:px-[16px] py-1 lg:py-[4px] rounded-[50px] text-[10px] lg:text-[14px] whitespace-nowrap shrink-0">
+                    <div className="bg-[#FFF0D7] text-[#9A3412] px-2 lg:px-[16px] py-1 lg:py-[4px] rounded-[50px] text-[10px] lg:text-[14px] whitespace-nowrap shrink-0">
                       <span className="sr-only">Statut : </span>En cours
                     </div>
                   </div>
@@ -385,7 +385,7 @@ export default function DashboardPage() {
 
             <div className="flex items-center gap-[8px] mb-[20px] lg:mb-[40px]">
               <h2 className="text-[16px] lg:text-[18px] font-semibold text-[#1F1F1F] font-manrope">Terminées</h2>
-              <div className="w-[41px] h-[25px] bg-[#E5E7EB] rounded-[50px] flex items-center justify-center text-[12px] text-[#6B7280]" aria-label={`${doneTasks.length} tâches terminées`}>{doneTasks.length}</div>
+              <div className="w-[41px] h-[25px] bg-[#E5E7EB] rounded-[50px] flex items-center justify-center text-[12px] text-[#374151]" aria-label={`${doneTasks.length} tâches terminées`}>{doneTasks.length}</div>
             </div>
             <div className="flex flex-col gap-[20px] lg:gap-[41px] items-center">
               {doneTasks.map((task, index) => (
@@ -395,7 +395,7 @@ export default function DashboardPage() {
                       <h3 className="text-[16px] lg:text-[18px] font-semibold text-[#000000] mb-[7px] truncate font-manrope">{task.title}</h3>
                       <p className="text-[12px] lg:text-[14px] text-[#6B7280] line-clamp-2 font-inter">{task.description}</p>
                     </div>
-                    <div className="bg-[#F1FFF7] text-[#27E600] px-2 lg:px-[16px] py-1 lg:py-[4px] rounded-[50px] text-[10px] lg:text-[14px] whitespace-nowrap shrink-0">
+                    <div className="bg-[#F1FFF7] text-[#166534] px-2 lg:px-[16px] py-1 lg:py-[4px] rounded-[50px] text-[10px] lg:text-[14px] whitespace-nowrap shrink-0">
                       <span className="sr-only">Statut : </span>Terminée
                     </div>
                   </div>

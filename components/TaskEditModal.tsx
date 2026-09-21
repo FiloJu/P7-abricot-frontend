@@ -301,7 +301,7 @@ export default function TaskEditModal({ isOpen, onClose, task, projectId, contri
                 type="button"
                 aria-pressed={status === 'À faire'}
                 onClick={() => setStatus('À faire')}
-                className={`w-[75px] h-[25px] rounded-[50px] flex items-center justify-center text-[12px] lg:text-[14px] font-normal transition font-inter ${status === 'À faire' ? 'bg-[#FFE0E0] text-[#EF4444] ring-2 ring-red-300' : 'bg-[#FFE0E0] text-[#EF4444] opacity-70 hover:opacity-100'}`}
+                className={`w-[75px] h-[25px] rounded-[50px] flex items-center justify-center text-[12px] lg:text-[14px] font-normal transition font-inter ${status === 'À faire' ? 'bg-[#FFE0E0] text-[#991B1B] ring-2 ring-red-300' : 'bg-[#FFE0E0] text-[#991B1B]'}`}
               >
                 À faire
               </button>
@@ -311,7 +311,7 @@ export default function TaskEditModal({ isOpen, onClose, task, projectId, contri
                 type="button"
                 aria-pressed={status === 'En cours'}
                 onClick={() => setStatus('En cours')}
-                className={`w-[90px] h-[25px] rounded-[50px] flex items-center justify-center text-[12px] lg:text-[14px] font-normal transition font-inter ${status === 'En cours' ? 'bg-[#FFF0D7] text-[#E08D00] ring-2 ring-orange-300' : 'bg-[#FFF0D7] text-[#E08D00] opacity-70 hover:opacity-100'}`}
+                className={`w-[90px] h-[25px] rounded-[50px] flex items-center justify-center text-[12px] lg:text-[14px] font-normal transition font-inter ${status === 'En cours' ? 'bg-[#FFF0D7] text-[#9A3412] ring-2 ring-orange-300' : 'bg-[#FFF0D7] text-[#9A3412]'}`}
               >
                 En cours
               </button>
@@ -321,7 +321,7 @@ export default function TaskEditModal({ isOpen, onClose, task, projectId, contri
                 type="button"
                 aria-pressed={status === 'Terminée'}
                 onClick={() => setStatus('Terminée')}
-                className={`w-[94px] h-[25px] rounded-[50px] flex items-center justify-center text-[12px] lg:text-[14px] font-normal transition font-inter ${status === 'Terminée' ? 'bg-[#F1FFF7] text-[#27AE60] ring-2 ring-green-300' : 'bg-[#F1FFF7] text-[#27AE60] opacity-70 hover:opacity-100'}`}
+                className={`w-[94px] h-[25px] rounded-[50px] flex items-center justify-center text-[12px] lg:text-[14px] font-normal transition font-inter ${status === 'Terminée' ? 'bg-[#F1FFF7] text-[#166534] ring-2 ring-green-300' : 'bg-[#F1FFF7] text-[#166534]'}`}
               >
                 Terminée
               </button>
@@ -331,7 +331,7 @@ export default function TaskEditModal({ isOpen, onClose, task, projectId, contri
           <div className="mt-[32px] lg:mt-[56px] flex flex-col-reverse lg:flex-row items-center gap-[16px] lg:gap-[24px]">
             <button
               type="submit"
-              className="w-full lg:w-[181px] h-[50px] bg-[#E5E7EB] text-[#9CA3AF] rounded-[10px] text-[16px] font-normal flex items-center justify-center transition hover:bg-[#D1D5DB] font-inter"
+              className="w-full lg:w-[181px] h-[50px] bg-[#E5E7EB] text-[#374151] rounded-[10px] text-[16px] font-normal flex items-center justify-center transition hover:bg-[#D1D5DB] font-inter"
             >
               Enregistrer
             </button>

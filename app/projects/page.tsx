@@ -295,7 +295,7 @@ export default function ProjectsPage() {
                         {/* Text pill */}
                         <div className="flex items-center bg-[#FFE8D9] rounded-[40px] h-[27px] px-[10px]">
                           <span
-                            className="text-[14px] font-normal text-[#D3590B] font-inter"
+                            className="text-[14px] font-normal text-[#A63F06] font-inter"
                           >
                             Propriétaire
                           </span>

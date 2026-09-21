@@ -121,7 +121,7 @@ export default function LoginPage() {
 
                         <Link
                             href="/forgot-password"
-                            className="mt-[21px] text-[#D3590B] text-[14px] font-normal underline font-inter"
+                            className="mt-[21px] text-[#A63F06] text-[14px] font-normal underline font-inter"
                         >
                             Mot de passe oublié?
                         </Link>
@@ -132,7 +132,7 @@ export default function LoginPage() {
                     <span className="text-[#000000] text-[14px] font-normal">
                         Pas encore de compte ?
                     </span>
-                    <Link href="/register" className="text-[#D3590B] text-[14px] font-normal underline">
+                    <Link href="/register" className="text-[#A63F06] text-[14px] font-normal underline">
                         Créer un compte
                     </Link>
                 </div>

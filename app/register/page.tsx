@@ -46,6 +46,7 @@ export default function RegisterPage() {
                 setError(data.message || "Erreur lors de l'inscription");
             }
         } catch (err) {
+            console.error("Erreur lors de l'inscription :", err);
             setError('Impossible de joindre le serveur.');
         }
     };
@@ -113,7 +114,7 @@ export default function RegisterPage() {
                             type="submit"
                             className="w-full lg:w-[249px] h-[50px] mt-[28px] bg-[#1F1F1F] text-[#FFFFFF] text-[16px] font-normal rounded-[10px] flex justify-center items-center font-inter"
                         >
-                            S'inscrire
+                            S&apos;inscrire
                         </button>
 
                     </form>
@@ -125,7 +126,7 @@ export default function RegisterPage() {
                         <span className="text-[#000000] text-[14px] font-normal">
                             Déjà inscrit ?
                         </span>
-                        <Link href="/login" className="text-[#D3590B] text-[14px] font-normal underline">
+                        <Link href="/login" className="text-[#A63F06] text-[14px] font-normal underline">
                             Se connecter
                         </Link>
                     </div>

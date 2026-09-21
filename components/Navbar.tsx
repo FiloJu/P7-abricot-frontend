@@ -83,7 +83,7 @@ export default function Navbar() {
             <div className="flex items-center justify-center gap-2 lg:gap-[16px] w-full lg:w-[512px] h-[50px] lg:h-[78px] order-last lg:order-none mt-4 lg:mt-0 lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2">
                 <Link
                     href="/dashboard"
-                    className={`flex items-center justify-center gap-2 lg:gap-[10px] flex-1 lg:w-[248px] h-full rounded-[10px] transition-colors ${isActive('/dashboard') ? 'bg-[#0F0F0F] text-[#FFFFFF]' : 'bg-[#FFFFFF] text-[#D3590B] hover:bg-orange-50'}`}
+                    className={`flex items-center justify-center gap-2 lg:gap-[10px] flex-1 lg:w-[248px] h-full rounded-[10px] transition-colors ${isActive('/dashboard') ? 'bg-[#0F0F0F] text-[#FFFFFF]' : 'bg-[#FFFFFF] text-[#A63F06] hover:bg-orange-50'}`}
                 >
                     <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="fill-current w-[16px] h-[16px] lg:w-[20px] lg:h-[20px]">
                         <path d="M9.25 0H1.75C0.785 0 0 0.785 0 1.75V6.25C0 7.215 0.785 8 1.75 8H9.25C10.215 8 11 7.215 11 6.25V1.75C11 0.785 10.215 0 9.25 0Z" fill="currentColor" />
@@ -96,7 +96,7 @@ export default function Navbar() {
 
                 <Link
                     href="/projects"
-                    className={`flex items-center justify-center gap-2 lg:gap-[10px] flex-1 lg:w-[248px] h-full rounded-[10px] transition-colors ${isActive('/projects') ? 'bg-[#0F0F0F] text-[#FFFFFF]' : 'bg-[#FFFFFF] text-[#D3590B] hover:bg-orange-50'}`}
+                    className={`flex items-center justify-center gap-2 lg:gap-[10px] flex-1 lg:w-[248px] h-full rounded-[10px] transition-colors ${isActive('/projects') ? 'bg-[#0F0F0F] text-[#FFFFFF]' : 'bg-[#FFFFFF] text-[#A63F06] hover:bg-orange-50'}`}
                 >
                     <svg aria-hidden="true" width="24" height="19" viewBox="0 0 29 23" fill="none" xmlns="http://www.w3.org/2000/svg" className="fill-current w-[16px] h-[16px] lg:w-[24px] lg:h-[19px]">
                         <path d="M26.5791 9.08691C27.4428 9.08698 28.2214 9.51204 28.6621 10.2227C29.0726 10.8866 29.1117 11.6992 28.7646 12.3965L24.3672 21.209C23.9765 21.9918 23.1766 22.4873 22.3018 22.4873H1.83984C0.970986 22.4873 0.240875 21.9031 0.0488281 21.1221L5.13672 10.4561C5.52599 9.62428 6.3926 9.08699 7.3457 9.08691H26.5791ZM8.66699 0C9.25766 6.22332e-05 9.81079 0.279265 10.1455 0.748047L12.0352 3.39062C12.0391 3.3935 12.05 3.39843 12.0654 3.39844H22.626C23.616 3.39852 24.4219 4.17503 24.4219 5.12988V7.44629H6.31055C5.35695 7.44629 4.48933 7.9845 4.10059 8.81641L0 17.4141V1.73145C2.66478e-05 0.776583 0.805427 6.71615e-05 1.7959 0H8.66699Z" fill="currentColor" />
@@ -110,7 +110,7 @@ export default function Navbar() {
                     href="/profile"
                     aria-label="View my profile"
                     className={`flex items-center justify-center w-[45px] h-[45px] lg:w-[65px] lg:h-[65px] rounded-full transition-all cursor-pointer ${isProfilePage
-                        ? 'bg-[#D3590B] text-[#FFFFFF]'
+                        ? 'bg-[#A63F06] text-[#FFFFFF]'
                         : 'bg-[#FFE8D9] text-[#0F0F0F] hover:ring-2 ring-orange-300'
                         }`}
                 >

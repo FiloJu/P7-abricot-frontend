@@ -151,7 +151,7 @@ export default function ProjectCreationModal({ isOpen, onClose }: ProjectCreatio
             </div>
           </div>
 
-          <button type="submit" disabled={!title.trim() || !description.trim()} className="mt-4 lg:mt-auto mb-6 lg:mb-[60px] w-full lg:w-[181px] h-[50px] bg-[#E5E7EB] text-[#9CA3AF] rounded-[10px] text-[16px] transition disabled:opacity-50 hover:bg-black font-inter">
+          <button type="submit" disabled={!title.trim() || !description.trim()} className="mt-4 lg:mt-auto mb-6 lg:mb-[60px] w-full lg:w-[181px] h-[50px] bg-[#E5E7EB] text-[#374151] rounded-[10px] text-[16px] transition hover:bg-black font-inter">
             Ajouter un projet
           </button>
         </form>
