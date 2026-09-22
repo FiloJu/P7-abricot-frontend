@@ -8,6 +8,7 @@ import Cookies from 'js-cookie';
 import Image from 'next/image';
 
 export default function RegisterPage() {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -23,7 +24,7 @@ export default function RegisterPage() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({ name, email, password }),
             });
 
             const data = await response.json();
@@ -78,6 +79,23 @@ export default function RegisterPage() {
 
                         <div className="w-full flex flex-col">
                             <label
+                                htmlFor="name"
+                                className="text-[#000000] text-[14px] font-normal mb-[7px] text-left font-inter"
+                            >
+                                Nom
+                            </label>
+                            <input
+                                id="name"
+                                type="text"
+                                className="w-full lg:w-[282px] h-[53px] rounded-[4px] border border-[#E5E7EB] bg-[#FFFFFF] px-3 focus:outline-none"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                required
+                            />
+                        </div>
+
+                        <div className="w-full flex flex-col mt-[29px]">
+                            <label
                                 htmlFor="email"
                                 className="text-[#000000] text-[14px] font-normal mb-[7px] text-left font-inter"
                             >
@@ -106,6 +124,9 @@ export default function RegisterPage() {
                                 className="w-full lg:w-[282px] h-[53px] rounded-[4px] border border-[#E5E7EB] bg-[#FFFFFF] px-3 focus:outline-none [&:-webkit-autofill]:[box-shadow:0_0_0_1000px_white_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:black]"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
+                                minLength={8}
+                                pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}"
+                                title="Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial (@$!%*?&)."
                                 required
                             />
                         </div>

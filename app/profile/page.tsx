@@ -12,6 +12,7 @@ export default function ProfilePage() {
     const [editLastName, setEditLastName] = useState('');
     const [editFirstName, setEditFirstName] = useState('');
     const [editEmail, setEditEmail] = useState('');
+    const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -71,13 +72,13 @@ export default function ProfilePage() {
             email: editEmail
         };
 
-        // Password is included only if the user has entered a new password
-        if (newPassword.trim() !== '') {
-            updateData.password = newPassword;
+        if (newPassword.trim() !== '' && currentPassword.trim() === '') {
+            setErrorMessage('Saisissez votre mot de passe actuel pour le modifier.');
+            return;
         }
 
         try {
-            const response = await fetch('http://localhost:8000/auth/profile', {
+            const profileResponse = await fetch('http://localhost:8000/auth/profile', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -86,12 +87,31 @@ export default function ProfilePage() {
                 body: JSON.stringify(updateData)
             });
 
-            if (response.ok) {
-                setSuccessMessage("Profil mis à jour avec succès !");
-                setNewPassword('');
-            } else {
+            if (!profileResponse.ok) {
                 setErrorMessage("Erreur lors de la mise à jour des informations. Veuillez réessayer");
+                return;
             }
+
+            if (newPassword.trim() !== '') {
+                const passwordResponse = await fetch('http://localhost:8000/auth/password', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ currentPassword, newPassword })
+                });
+
+                if (!passwordResponse.ok) {
+                    const passwordData = await passwordResponse.json().catch(() => null);
+                    setErrorMessage(passwordData?.message || 'Impossible de modifier le mot de passe.');
+                    return;
+                }
+            }
+
+            setSuccessMessage("Profil mis à jour avec succès !");
+            setCurrentPassword('');
+            setNewPassword('');
         } catch (error) {
             setErrorMessage("Impossible de joindre le serveur.");
         }
@@ -155,6 +175,18 @@ export default function ProfilePage() {
                         />
                     </div>
 
+                    <div className="mb-[20px] lg:mb-[24px] bg-[#FFFFFF]">
+                        <label htmlFor="currentPassword" className="block text-[12px] lg:text-[14px] text-[#000000] font-regular mb-[7px] break-words font-inter">Mot de passe actuel</label>
+                        <input
+                            id="currentPassword"
+                            type="password"
+                            value={currentPassword}
+                            onChange={(e) => setCurrentPassword(e.target.value)}
+                            placeholder="●●●●●●●●●●●"
+                            className="w-full lg:max-w-[1097px] h-[53px] border border-[#E5E7EB] rounded-[4px] px-[17px] text-[14px] text-[#1F1F1F] placeholder:text-[#4B5563] tracking-widest outline-none focus:border-[#D3590B] transition"
+                        />
+                    </div>
+
                     <div className="mb-[30px] lg:mb-[41px] bg-[#FFFFFF]">
                         <label htmlFor="newPassword" className="block text-[12px] lg:text-[14px] text-[#000000] font-regular mb-[7px] break-words font-inter">Mot de passe</label>
                         <input
@@ -163,6 +195,9 @@ export default function ProfilePage() {
                             value={newPassword}
                             onChange={(e) => setNewPassword(e.target.value)}
                             placeholder="●●●●●●●●●●●"
+                            minLength={8}
+                            pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}"
+                            title="Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial (@$!%*?&)."
                             className="w-full lg:max-w-[1097px] h-[53px] border border-[#E5E7EB] rounded-[4px] px-[17px] text-[14px] text-[#1F1F1F] placeholder:text-[#4B5563] tracking-widest outline-none focus:border-[#D3590B] transition"
                         />
                     </div>
