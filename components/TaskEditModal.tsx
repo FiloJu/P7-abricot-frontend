@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import type { FormEvent } from 'react';
 import Image from 'next/image';
 import Cookies from 'js-cookie';
+import AccessibleModal from './AccessibleModal';
 
 interface TaskEditModalProps {
   isOpen: boolean;
@@ -132,7 +133,7 @@ export default function TaskEditModal({ isOpen, onClose, task, projectId, contri
 
   return (
     // 1. Blurred overlay.
-    <div className="fixed inset-0 bg-gray-500/20 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+    <AccessibleModal isOpen={isOpen} onClose={onClose} titleId="edit-task-title-heading">
 
       {/* Modal window. */}
       <div className="bg-[#FFFFFF] rounded-[10px] w-full max-w-[598px] h-auto max-h-[90vh] lg:h-[799px] overflow-y-auto relative pt-[60px] lg:pt-[79px] px-6 lg:px-[73px] pb-[40px] lg:pb-[79px] shadow-xl font-sans flex flex-col hide-scrollbar">
@@ -148,6 +149,7 @@ export default function TaskEditModal({ isOpen, onClose, task, projectId, contri
 
         {/* Main title. */}
         <h2
+          id="edit-task-title-heading"
           className="text-[#1F1F1F] text-[20px] lg:text-[24px] font-semibold mb-[24px] lg:mb-[40px] self-start font-manrope"
           style={{ lineHeight: "100%" }}
         >
@@ -339,6 +341,6 @@ export default function TaskEditModal({ isOpen, onClose, task, projectId, contri
           </div>
         </form>
       </div>
-    </div>
+    </AccessibleModal>
   );
 }

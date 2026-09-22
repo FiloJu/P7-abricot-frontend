@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import type { FormEvent } from 'react';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
+import AccessibleModal from './AccessibleModal';
 
 interface ProjectCreationModalProps {
   isOpen: boolean;
@@ -85,14 +86,14 @@ export default function ProjectCreationModal({ isOpen, onClose }: ProjectCreatio
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-500/20 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+    <AccessibleModal isOpen={isOpen} onClose={onClose} titleId="create-project-title">
       <div className="bg-white rounded-[10px] w-full max-w-[598px] max-h-[calc(100dvh-2rem)] overflow-y-auto h-auto lg:h-[616px] relative pt-[60px] lg:pt-[79px] px-5 sm:px-6 lg:px-[73px] pb-6 lg:pb-0 shadow-xl font-sans flex flex-col">
 
-        <button onClick={onClose} className="absolute top-[20px] lg:top-[37px] right-[20px] lg:right-[38.67px] hover:opacity-70 transition flex items-center justify-center">
+        <button type="button" onClick={onClose} aria-label="Fermer la modale" className="absolute top-[20px] lg:top-[37px] right-[20px] lg:right-[38.67px] hover:opacity-70 transition flex items-center justify-center">
           <Image src="/cross.svg" alt="Fermer" width={14} height={14} />
         </button>
 
-        <h2 className="text-[#1F1F1F] text-[20px] lg:text-[24px] font-semibold mb-[24px] lg:mb-[33px] font-manrope">
+        <h2 id="create-project-title" className="text-[#1F1F1F] text-[20px] lg:text-[24px] font-semibold mb-[24px] lg:mb-[33px] font-manrope">
           Créer un projet
         </h2>
 
@@ -156,6 +157,6 @@ export default function ProjectCreationModal({ isOpen, onClose }: ProjectCreatio
           </button>
         </form>
       </div>
-    </div>
+    </AccessibleModal>
   );
 }

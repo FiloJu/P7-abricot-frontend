@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
+import AccessibleModal from './AccessibleModal';
 
 interface ProjectEditModalProps {
     isOpen: boolean;
@@ -76,7 +77,7 @@ export default function ProjectEditModal({ isOpen, onClose, project }: ProjectEd
     };
 
     return (
-        <div className="fixed inset-0 bg-gray-500/20 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <AccessibleModal isOpen={isOpen} onClose={onClose} titleId="edit-project-title-heading">
             <div className="bg-white rounded-[10px] w-full max-w-[598px] max-h-[calc(100dvh-2rem)] min-h-[500px] lg:h-[616px] relative pt-[60px] lg:pt-[79px] px-5 sm:px-6 lg:px-[73px] pb-[40px] lg:pb-[79px] shadow-xl font-sans flex flex-col hide-scrollbar overflow-y-auto">
 
                 <button
@@ -87,7 +88,7 @@ export default function ProjectEditModal({ isOpen, onClose, project }: ProjectEd
                     <Image src="/cross.svg" alt="" width={14} height={14} />
                 </button>
 
-                <h2 className="text-[#1F1F1F] text-[20px] lg:text-[24px] font-semibold mb-[24px] lg:mb-[40px] font-manrope">
+                <h2 id="edit-project-title-heading" className="text-[#1F1F1F] text-[20px] lg:text-[24px] font-semibold mb-[24px] lg:mb-[40px] font-manrope">
                     Modifier un projet
                 </h2>
 
@@ -180,6 +181,6 @@ export default function ProjectEditModal({ isOpen, onClose, project }: ProjectEd
                     </div>
                 </form>
             </div>
-        </div>
+        </AccessibleModal>
     );
 }

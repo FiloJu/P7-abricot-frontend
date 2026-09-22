@@ -4,6 +4,7 @@ import { useState } from 'react';
 import type { FormEvent } from 'react';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
+import AccessibleModal from './AccessibleModal';
 
 interface TaskCreationModalProps {
   isOpen: boolean;
@@ -67,7 +68,7 @@ export default function TaskCreationModal({ isOpen, onClose, projectId, contribu
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-500/20 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+    <AccessibleModal isOpen={isOpen} onClose={onClose} titleId="create-task-title">
 
       <div className="bg-[#FFFFFF] rounded-[10px] w-full max-w-[598px] h-auto max-h-[90vh] lg:h-[799px] overflow-y-auto relative pt-[60px] lg:pt-[79px] px-6 lg:px-[73px] pb-[40px] lg:pb-[79px] shadow-xl font-sans flex flex-col hide-scrollbar">
 
@@ -79,6 +80,7 @@ export default function TaskCreationModal({ isOpen, onClose, projectId, contribu
         </button>
 
         <h2
+          id="create-task-title"
           className="text-[#1F1F1F] text-[20px] lg:text-[24px] font-semibold mb-[24px] lg:mb-[40px] self-start font-manrope"
           style={{ lineHeight: "100%" }}
         >
@@ -251,6 +253,6 @@ export default function TaskCreationModal({ isOpen, onClose, projectId, contribu
 
         </form>
       </div>
-    </div>
+    </AccessibleModal>
   );
 }

@@ -31,6 +31,7 @@ export default function RootLayout({
         <Navbar />
         <main className="min-h-[calc(100vh-8rem)]">{children}</main>
         <Footer />
+        <div id="modal-root" />
       </body>
     </html>
   );
