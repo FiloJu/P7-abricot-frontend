@@ -22,7 +22,7 @@ export default function TaskCreationModal({ isOpen, onClose, projectId, contribu
   const [dueDate, setDueDate] = useState('');
   const [selectedAssignees, setSelectedAssignees] = useState<string[]>([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [status, setStatus] = useState('À faire');
+  const [status, setStatus] = useState('TODO');
 
 
 
@@ -34,11 +34,6 @@ export default function TaskCreationModal({ isOpen, onClose, projectId, contribu
     try {
       const token = Cookies.get('auth_token') || Cookies.get('token');
 
-      // Translate the status into the backend format.
-      let backendStatus = "TODO";
-      if (status === "En cours") backendStatus = "IN_PROGRESS";
-      if (status === "Terminée") backendStatus = "DONE";
-
       const response = await fetch(`http://localhost:8000/projects/${projectId}/tasks`, {
         method: 'POST',
         headers: {
@@ -48,7 +43,7 @@ export default function TaskCreationModal({ isOpen, onClose, projectId, contribu
         body: JSON.stringify({
           title: title,
           description: description,
-          status: backendStatus,
+          status,
           // Convert the date to ISO format.
           dueDate: dueDate ? new Date(dueDate).toISOString() : null,
           // Send the actual user IDs.
@@ -221,24 +216,24 @@ export default function TaskCreationModal({ isOpen, onClose, projectId, contribu
             <div className="flex flex-wrap items-center gap-[8px]">
               <button
                 type="button"
-                onClick={() => setStatus('À faire')}
-                className={`w-[75px] h-[25px] rounded-[50px] flex items-center justify-center text-[12px] lg:text-[14px] font-normal transition font-inter ${status === 'À faire' ? 'bg-[#FFE0E0] text-[#991B1B] ring-2 ring-red-300' : 'bg-[#FFE0E0] text-[#991B1B]'}`}
+                onClick={() => setStatus('TODO')}
+                className={`w-[75px] h-[25px] rounded-[50px] flex items-center justify-center text-[12px] lg:text-[14px] font-normal transition font-inter ${status === 'TODO' ? 'bg-[#FFE0E0] text-[#991B1B] ring-2 ring-red-300' : 'bg-[#FFE0E0] text-[#991B1B]'}`}
               >
                 À faire
               </button>
 
               <button
                 type="button"
-                onClick={() => setStatus('En cours')}
-                className={`w-[90px] h-[25px] rounded-[50px] flex items-center justify-center text-[12px] lg:text-[14px] font-normal transition font-inter ${status === 'En cours' ? 'bg-[#FFF0D7] text-[#9A3412] ring-2 ring-orange-300' : 'bg-[#FFF0D7] text-[#9A3412]'}`}
+                onClick={() => setStatus('IN_PROGRESS')}
+                className={`w-[90px] h-[25px] rounded-[50px] flex items-center justify-center text-[12px] lg:text-[14px] font-normal transition font-inter ${status === 'IN_PROGRESS' ? 'bg-[#FFF0D7] text-[#9A3412] ring-2 ring-orange-300' : 'bg-[#FFF0D7] text-[#9A3412]'}`}
               >
                 En cours
               </button>
 
               <button
                 type="button"
-                onClick={() => setStatus('Terminée')}
-                className={`w-[94px] h-[25px] rounded-[50px] flex items-center justify-center text-[12px] lg:text-[14px] font-normal transition font-inter ${status === 'Terminée' ? 'bg-[#F1FFF7] text-[#166534] ring-2 ring-green-300' : 'bg-[#F1FFF7] text-[#166534]'}`}
+                onClick={() => setStatus('DONE')}
+                className={`w-[94px] h-[25px] rounded-[50px] flex items-center justify-center text-[12px] lg:text-[14px] font-normal transition font-inter ${status === 'DONE' ? 'bg-[#F1FFF7] text-[#166534] ring-2 ring-green-300' : 'bg-[#F1FFF7] text-[#166534]'}`}
               >
                 Terminée
               </button>
