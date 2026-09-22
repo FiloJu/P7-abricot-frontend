@@ -124,21 +124,23 @@ export default function ProjectEditModal({ isOpen, onClose, project }: ProjectEd
                     <div className="flex flex-col gap-[7px]">
                         <label id="label-contributors" className="font-normal text-[#1F1F1F]">Contributeurs</label>
                         <div className="relative w-full lg:w-[452px]">
-                            <div
-                                role="combobox"
+                            <button
+                                type="button"
                                 aria-labelledby="label-contributors"
+                                aria-haspopup="listbox"
                                 aria-expanded={isDropdownOpen}
+                                aria-controls="edit-project-contributors-list"
                                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                className="w-full min-h-[53px] border border-[#E5E7EB] rounded-[4px] pl-[17px] pr-[40px] py-[15px] text-[#6B7280] transition cursor-pointer flex flex-wrap gap-[5px] bg-white"
+                                className="w-full min-h-[53px] border border-[#E5E7EB] rounded-[4px] pl-[17px] pr-[40px] py-[15px] text-left text-[#6B7280] transition cursor-pointer flex flex-wrap gap-[5px] bg-white"
                             >
                                 {selectedContributors.length} collaborateur(s) sélectionné(s)
-                            </div>
+                            </button>
                             <div className="absolute top-[22.5px] right-[17px] pointer-events-none">
                                 <Image src="/vector.svg" alt="" width={16} height={8} className={`transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
                             </div>
 
                             {isDropdownOpen && (
-                                <div role="listbox" className="absolute top-[58px] left-0 w-full bg-white border border-[#E5E7EB] rounded-[4px] shadow-lg z-10 max-h-[180px] overflow-y-auto">
+                                <div id="edit-project-contributors-list" role="listbox" aria-label="Contributeurs du projet" className="absolute top-[58px] left-0 w-full bg-white border border-[#E5E7EB] rounded-[4px] shadow-lg z-10 max-h-[180px] overflow-y-auto">
                                     {members.map((member, index) => {
                                         const userEmail = member.user?.email || member.email;
                                         const userName = member.user?.name || member.name || userEmail;
@@ -148,11 +150,24 @@ export default function ProjectEditModal({ isOpen, onClose, project }: ProjectEd
                                         return (
                                             <div
                                                 key={index}
+                                                role="option"
+                                                aria-selected={isSelected}
+                                                tabIndex={0}
                                                 onClick={() => {
                                                     if (isSelected) {
                                                         setSelectedContributors(selectedContributors.filter(e => e !== userEmail));
                                                     } else {
                                                         setSelectedContributors([...selectedContributors, userEmail]);
+                                                    }
+                                                }}
+                                                onKeyDown={(event) => {
+                                                    if (event.key === 'Enter' || event.key === ' ') {
+                                                        event.preventDefault();
+                                                        if (isSelected) {
+                                                            setSelectedContributors(selectedContributors.filter(e => e !== userEmail));
+                                                        } else {
+                                                            setSelectedContributors([...selectedContributors, userEmail]);
+                                                        }
                                                     }
                                                 }}
                                                 className="px-[17px] py-[10px] text-[12px] text-[#1F1F1F] hover:bg-[#F3F4F6] cursor-pointer flex items-center gap-[10px] border-b border-gray-50 last:border-none"
@@ -162,6 +177,8 @@ export default function ProjectEditModal({ isOpen, onClose, project }: ProjectEd
                                                     type="checkbox"
                                                     checked={isSelected}
                                                     readOnly
+                                                    tabIndex={-1}
+                                                    aria-hidden="true"
                                                     className="cursor-pointer accent-[#D3590B]"
                                                     aria-label={`Sélectionner ${userName}`}
                                                 />

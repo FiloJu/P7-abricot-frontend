@@ -227,16 +227,19 @@ export default function TaskEditModal({ isOpen, onClose, task, projectId, contri
             <div className="relative w-full lg:w-[452px]">
 
               {/* Number of selected members. */}
-              <div
-                role="combobox"
+              <button
+                type="button"
+                aria-label="Choisir les personnes assignées"
+                aria-haspopup="listbox"
                 aria-expanded={isDropdownOpen}
+                aria-controls="edit-task-assignees-list"
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="w-full min-h-[53px] border border-[#E5E7EB] rounded-[4px] pl-[17px] pr-[40px] py-[15px] text-[12px] text-[#6B7280] transition cursor-pointer flex items-center bg-white"
+                className="w-full min-h-[53px] border border-[#E5E7EB] rounded-[4px] pl-[17px] pr-[40px] py-[15px] text-left text-[12px] text-[#6B7280] transition cursor-pointer flex items-center bg-white"
               >
                 {selectedAssignees.length === 0
                   ? "Choisir un ou plusieurs collaborateurs"
                   : `${selectedAssignees.length} collaborateur(s)`}
-              </div>
+              </button>
 
               {/* Arrow icon. */}
               <div className="absolute right-[17px] top-[50%] -translate-y-1/2 pointer-events-none flex items-center justify-center">
@@ -245,7 +248,7 @@ export default function TaskEditModal({ isOpen, onClose, task, projectId, contri
 
 
               {isDropdownOpen && (
-                <div role="listbox" className="absolute top-[70px] left-0 w-full bg-white border border-[#E5E7EB] rounded-[4px] shadow-md z-10 max-h-[150px] overflow-y-auto">
+                <div id="edit-task-assignees-list" role="listbox" aria-label="Personnes assignables" className="absolute top-[70px] left-0 w-full bg-white border border-[#E5E7EB] rounded-[4px] shadow-md z-10 max-h-[150px] overflow-y-auto">
                   {contributors && contributors.length > 0 ? (
                     contributors.map((contributor: any, index: number) => {
                       const targetId = getContributorId(contributor);
@@ -280,7 +283,7 @@ export default function TaskEditModal({ isOpen, onClose, task, projectId, contri
                           }}
                           className="px-[17px] py-[10px] text-[12px] text-[#1F1F1F] hover:bg-[#F3F4F6] cursor-pointer flex items-center gap-[10px]"
                         >
-                          <input type="checkbox" checked={isSelected} readOnly tabIndex={-1} aria-label={`Assigner à ${nameToDisplay}`} className="cursor-pointer" />
+                          <input type="checkbox" checked={isSelected} readOnly tabIndex={-1} aria-hidden="true" className="cursor-pointer" />
                           {nameToDisplay}
                         </div>
                       );

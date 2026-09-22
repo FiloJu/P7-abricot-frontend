@@ -111,19 +111,27 @@ export default function ProjectCreationModal({ isOpen, onClose }: ProjectCreatio
           <div className="flex flex-col gap-[7px]">
             <label className="text-[14px] font-normal text-[#1F1F1F] font-inter">Contributeurs</label>
             <div className="relative w-full lg:w-[452px]">
-              <div onClick={() => setIsDropdownOpen(!isDropdownOpen)} className="w-full min-h-[53px] border border-[#E5E7EB] rounded-[4px] pl-[17px] pr-[40px] py-[15px] text-[14px] text-[#6B7280] transition cursor-pointer flex flex-wrap gap-[5px] bg-white font-inter">
+              <button
+                type="button"
+                aria-label="Choisir les contributeurs"
+                aria-haspopup="listbox"
+                aria-expanded={isDropdownOpen}
+                aria-controls="project-contributors-list"
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="w-full min-h-[53px] border border-[#E5E7EB] rounded-[4px] pl-[17px] pr-[40px] py-[15px] text-left text-[14px] text-[#6B7280] transition cursor-pointer flex flex-wrap gap-[5px] bg-white font-inter"
+              >
                 {selectedContributors.length === 0 ? "Choisir un ou plusieurs collaborateurs" : selectedContributors.map(email => (
                   <span key={email} className="bg-[#E5E7EB] text-[#1F1F1F] px-[8px] py-[2px] rounded-[4px] text-[12px]">
                     {allUsers.find(u => u.email === email)?.name || email}
                   </span>
                 ))}
-              </div>
+              </button>
               <div className="absolute top-[22.5px] right-[17px] pointer-events-none">
                 <Image src="/vector.svg" alt="" width={16} height={8} className={`transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
               </div>
 
               {isDropdownOpen && (
-                <div className="absolute top-[58px] left-0 w-full bg-white border border-[#E5E7EB] rounded-[4px] shadow-lg z-10 flex flex-col">
+                <div id="project-contributors-list" role="listbox" aria-label="Contributeurs disponibles" className="absolute top-[58px] left-0 w-full bg-white border border-[#E5E7EB] rounded-[4px] shadow-lg z-10 flex flex-col">
                   {/* SEARCH BAR IN THE MENU */}
                   <div className="p-2 border-b border-gray-100">
                     <input
@@ -136,11 +144,25 @@ export default function ProjectCreationModal({ isOpen, onClose }: ProjectCreatio
                   </div>
                   <div className="max-h-[180px] overflow-y-auto">
                     {allUsers.length > 0 ? allUsers.map((user, index) => (
-                      <div key={index} onClick={() => {
-                        const isSelected = selectedContributors.includes(user.email);
-                        setSelectedContributors(isSelected ? selectedContributors.filter(e => e !== user.email) : [...selectedContributors, user.email]);
-                      }} className="px-[17px] py-[12px] text-[14px] text-[#1F1F1F] hover:bg-[#F3F4F6] cursor-pointer flex items-center gap-[10px] font-inter">
-                        <input type="checkbox" checked={selectedContributors.includes(user.email)} readOnly className="accent-[#D3590B]" />
+                      <div
+                        key={index}
+                        role="option"
+                        aria-selected={selectedContributors.includes(user.email)}
+                        tabIndex={0}
+                        onClick={() => {
+                          const isSelected = selectedContributors.includes(user.email);
+                          setSelectedContributors(isSelected ? selectedContributors.filter(e => e !== user.email) : [...selectedContributors, user.email]);
+                        }}
+                        onKeyDown={(event) => {
+                          if (event.key === 'Enter' || event.key === ' ') {
+                            event.preventDefault();
+                            const isSelected = selectedContributors.includes(user.email);
+                            setSelectedContributors(isSelected ? selectedContributors.filter(e => e !== user.email) : [...selectedContributors, user.email]);
+                          }
+                        }}
+                        className="px-[17px] py-[12px] text-[14px] text-[#1F1F1F] hover:bg-[#F3F4F6] cursor-pointer flex items-center gap-[10px] font-inter"
+                      >
+                        <input type="checkbox" checked={selectedContributors.includes(user.email)} readOnly tabIndex={-1} aria-hidden="true" className="accent-[#D3590B]" />
                         {user.name || user.email}
                       </div>
                     )) : (

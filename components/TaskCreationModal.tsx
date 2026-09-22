@@ -155,9 +155,14 @@ export default function TaskCreationModal({ isOpen, onClose, projectId, contribu
             <div className="relative w-full lg:w-[452px]">
 
               {/* Button used to open the dropdown. */}
-              <div
+              <button
+                type="button"
+                aria-label="Choisir les personnes assignées"
+                aria-haspopup="listbox"
+                aria-expanded={isDropdownOpen}
+                aria-controls="task-assignees-list"
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="w-full min-h-[53px] border border-[#E5E7EB] rounded-[4px] pl-[17px] pr-[40px] py-[15px] text-[12px] text-[#6B7280] transition cursor-pointer flex flex-wrap gap-[5px]"
+                className="w-full min-h-[53px] border border-[#E5E7EB] rounded-[4px] pl-[17px] pr-[40px] py-[15px] text-left text-[12px] text-[#6B7280] transition cursor-pointer flex flex-wrap gap-[5px]"
               >
                 {selectedAssignees.length === 0 ? (
                   "Choisir un ou plusieurs collaborateurs"
@@ -173,14 +178,14 @@ export default function TaskCreationModal({ isOpen, onClose, projectId, contribu
                     );
                   })
                 )}
-              </div>
+              </button>
               <div className="absolute top-[22.5px] right-[17px] pointer-events-none flex items-center justify-center">
                 <Image src="/vector.svg" alt="Flèche" width={16} height={8} className={`w-[16px] h-[8px] transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
               </div>
 
               {/* Hidden dropdown menu. */}
               {isDropdownOpen && (
-                <div className="absolute top-[58px] left-0 w-full bg-white border border-[#E5E7EB] rounded-[4px] shadow-md z-10 max-h-[150px] overflow-y-auto">
+                <div id="task-assignees-list" role="listbox" aria-label="Personnes assignables" className="absolute top-[58px] left-0 w-full bg-white border border-[#E5E7EB] rounded-[4px] shadow-md z-10 max-h-[150px] overflow-y-auto">
                   {contributors && contributors.length > 0 ? (
                     contributors.map((contributor: any, index: number) => {
                       const targetId = getContributorId(contributor);
@@ -190,6 +195,9 @@ export default function TaskCreationModal({ isOpen, onClose, projectId, contribu
                       return (
                         <div
                           key={index}
+                          role="option"
+                          aria-selected={isSelected}
+                          tabIndex={0}
                           onClick={() => {
                             // Toggle the selected person.
                             if (isSelected) {
@@ -198,9 +206,19 @@ export default function TaskCreationModal({ isOpen, onClose, projectId, contribu
                               setSelectedAssignees([...selectedAssignees, targetId]);
                             }
                           }}
+                          onKeyDown={(event) => {
+                            if (event.key === 'Enter' || event.key === ' ') {
+                              event.preventDefault();
+                              if (isSelected) {
+                                setSelectedAssignees(selectedAssignees.filter(id => id !== targetId));
+                              } else {
+                                setSelectedAssignees([...selectedAssignees, targetId]);
+                              }
+                            }
+                          }}
                           className="px-[17px] py-[10px] text-[12px] text-[#1F1F1F] hover:bg-[#F3F4F6] cursor-pointer flex items-center gap-[10px]"
                         >
-                          <input type="checkbox" checked={isSelected} readOnly className="cursor-pointer" />
+                          <input type="checkbox" checked={isSelected} readOnly tabIndex={-1} aria-hidden="true" className="cursor-pointer" />
                           {fullName}
                         </div>
                       );
