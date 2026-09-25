@@ -1,4 +1,5 @@
 'use client';
+/* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/set-state-in-effect */
 
 import { useState, useEffect } from 'react';
 import type { FormEvent } from 'react';
@@ -80,7 +81,7 @@ export default function ProjectCreationModal({ isOpen, onClose }: ProjectCreatio
         const errorData = await response.json().catch(() => null);
         alert(errorData?.message || "Erreur lors de la création du projet.");
       }
-    } catch (error) {
+    } catch {
       alert("Impossible de joindre le serveur.");
     }
   };

@@ -7,10 +7,21 @@ import Cookies from "js-cookie";
 import Image from "next/image";
 import ProjectCreationModal from "@/components/ProjectCreationModal";
 
+type TaskItem = {
+  id?: string;
+  title?: string;
+  description?: string;
+  status?: string;
+  project?: { name?: string; id?: string };
+  projectId?: string;
+  dueDate?: string;
+  comments?: { id?: string }[];
+};
+
 export default function DashboardPage() {
   const router = useRouter();
 
-  const [tasks, setTasks] = useState<any[]>([]);
+  const [tasks, setTasks] = useState<TaskItem[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentView, setCurrentView] = useState('liste');
   const [searchQuery, setSearchQuery] = useState('');

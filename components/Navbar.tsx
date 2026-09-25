@@ -8,18 +8,9 @@ import Image from "next/image";
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [token, setToken] = useState<string | null>(null);
+  const token = Cookies.get("auth_token") || Cookies.get("token") || null;
   const isAuthenticated = Boolean(token);
   const [userInitials, setUserInitials] = useState("");
-
-  useEffect(() => {
-    const currentToken =
-      Cookies.get("auth_token") ||
-      Cookies.get("token") ||
-      null;
-
-    setToken(currentToken);
-  }, [pathname]);
 
   useEffect(() => {
     // Load the profile used to build the avatar label.

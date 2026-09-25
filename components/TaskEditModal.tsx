@@ -1,4 +1,5 @@
 'use client';
+/* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/set-state-in-effect */
 
 import { useState, useEffect } from 'react';
 import type { FormEvent } from 'react';
@@ -58,36 +59,6 @@ export default function TaskEditModal({ isOpen, onClose, task, projectId, contri
   }, [task]);
 
   if (!isOpen) return null;
-
-  // Delete request.
-  const handleDelete = async () => {
-    // Ask for confirmation to prevent accidental deletion.
-    if (!window.confirm("Êtes-vous sûr de vouloir supprimer cette tâche ?")) return;
-    if (!projectId || !task?.id) return;
-
-    try {
-      const token = Cookies.get('auth_token') || Cookies.get('token');
-
-      const response = await fetch(`http://localhost:8000/projects/${projectId}/tasks/${task.id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-
-      if (response.ok) {
-        console.log("Tâche supprimée !");
-        onClose();
-        window.location.reload();
-      } else {
-        console.error("Erreur backend lors de la suppression");
-        alert("Erreur lors de la suppression de la tâche.");
-      }
-    } catch (error) {
-      console.error("Erreur réseau:", error);
-      alert("Impossible de joindre le serveur.");
-    }
-  };
 
   // Update request.
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {

@@ -4,9 +4,15 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 
+type UserProfile = {
+    name?: string;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+};
+
 export default function ProfilePage() {
     const router = useRouter();
-    const [user, setUser] = useState<any>(null);
     const [loading, setLoading] = useState(true);
 
     const [editLastName, setEditLastName] = useState('');
@@ -22,7 +28,6 @@ export default function ProfilePage() {
 
         if (!token) {
             router.replace('/login');
-            setLoading(false);
             return;
         }
 
@@ -35,8 +40,7 @@ export default function ProfilePage() {
 
                 if (res.ok) {
                     const json = await res.json();
-                    const userData = json.data?.user || json.data || json.user || json;
-                    setUser(userData);
+                    const userData = (json.data?.user || json.data || json.user || json) as UserProfile;
 
                     const fullName = userData?.name || '';
                     const nameParts = fullName.split(' ');
@@ -46,8 +50,8 @@ export default function ProfilePage() {
                     setEditLastName(extractedLastName);
                     setEditEmail(userData?.email || '');
                 }
-            } catch (err) {
-                console.error("Erreur de récupération du profil:", err);
+            } catch {
+                console.error("Erreur de récupération du profil:");
             } finally {
                 setLoading(false);
             }
@@ -59,7 +63,7 @@ export default function ProfilePage() {
     const handleLogout = () => {
         Cookies.remove('auth_token', { path: '/' });
         Cookies.remove('token', { path: '/' });
-        window.location.href = '/login';
+        router.push('/login');
     };
 
     const handleUpdateProfile = async () => {
@@ -67,7 +71,7 @@ export default function ProfilePage() {
         setErrorMessage('');
         const token = Cookies.get('auth_token') || Cookies.get('token');
 
-        const updateData: any = {
+        const updateData: { name: string; email: string } = {
             name: `${editFirstName} ${editLastName}`.trim(),
             email: editEmail
         };
@@ -112,7 +116,7 @@ export default function ProfilePage() {
             setSuccessMessage("Profil mis à jour avec succès !");
             setCurrentPassword('');
             setNewPassword('');
-        } catch (error) {
+        } catch {
             setErrorMessage("Impossible de joindre le serveur.");
         }
     };

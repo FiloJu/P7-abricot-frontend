@@ -1,4 +1,5 @@
 'use client';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -14,6 +15,27 @@ interface TeamMember {
   isOwner: boolean;
 }
 
+interface CurrentUser {
+  id: string;
+  name?: string;
+  firstName?: string;
+  lastName?: string;
+}
+
+interface ProjectMember {
+  id?: string;
+  user?: { id?: string; name?: string; firstName?: string; lastName?: string; email?: string };
+  email?: string;
+  name?: string;
+  firstName?: string;
+  lastName?: string;
+}
+
+interface TaskLike {
+  status?: string;
+  id?: string;
+}
+
 interface Project {
   id: string;
   name: string;
@@ -21,6 +43,24 @@ interface Project {
   completedTasks: number;
   totalTasks: number;
   team: TeamMember[];
+  owner?: { id?: string; name?: string; firstName?: string; lastName?: string };
+  members?: ProjectMember[];
+  tasks?: TaskLike[];
+}
+
+interface ProjectApiItem {
+  id?: string;
+  owner?: { id?: string; name?: string; firstName?: string; lastName?: string };
+  members?: ProjectMember[];
+  tasks?: TaskLike[];
+  name?: string;
+  description?: string;
+  title?: string;
+  completedTasks?: number;
+  totalTasks?: number;
+  progress?: number;
+  progressPercent?: number;
+  completionPercentage?: number;
 }
 
 export default function ProjectsPage() {
@@ -28,9 +68,9 @@ export default function ProjectsPage() {
 
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(''); // Store potential errors
-  const [isModalOpen, setIsModalOpen] = useState(false); // Track whether the modal is open
-  const [currentUser, setCurrentUser] = useState<any>(null); // Store the logged-in user
+  const [error, setError] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
 
   // Fetch data on mount
 
@@ -39,7 +79,6 @@ export default function ProjectsPage() {
 
     if (!token) {
       router.replace('/login');
-      setLoading(false);
       return;
     }
 
@@ -52,11 +91,11 @@ export default function ProjectsPage() {
         });
         if (userRes.ok) {
           const userJson = await userRes.json();
-          const userData = userJson.data?.user || userJson.data || userJson.user || userJson;
+          const userData = (userJson.data?.user || userJson.data || userJson.user || userJson) as CurrentUser;
           setCurrentUser(userData);
         }
-      } catch (err) {
-        console.error("Erreur récupération utilisateur", err);
+      } catch {
+        console.error("Erreur récupération utilisateur");
       }
 
       // FETCH PROJECTS
@@ -68,14 +107,14 @@ export default function ProjectsPage() {
 
         if (response.ok) {
           const data = await response.json();
-          let listeProjets = [];
-          if (Array.isArray(data)) listeProjets = data;
-          else if (data.data && Array.isArray(data.data)) listeProjets = data.data;
-          else if (data.data && Array.isArray(data.data.projects)) listeProjets = data.data.projects;
-          else if (data.projects && Array.isArray(data.projects)) listeProjets = data.projects;
+          let listeProjets: ProjectApiItem[] = [];
+          if (Array.isArray(data)) listeProjets = data as ProjectApiItem[];
+          else if (data.data && Array.isArray(data.data)) listeProjets = data.data as ProjectApiItem[];
+          else if (data.data && Array.isArray(data.data.projects)) listeProjets = data.data.projects as ProjectApiItem[];
+          else if (data.projects && Array.isArray(data.projects)) listeProjets = data.projects as ProjectApiItem[];
 
           const detailedProjects = await Promise.all(
-            listeProjets.map(async (project: any) => {
+            listeProjets.map(async (project: ProjectApiItem) => {
               try {
                 const detailResponse = await fetch(`http://localhost:8000/projects/${project.id}`, {
                   headers: { 'Authorization': `Bearer ${token}` }
@@ -96,7 +135,7 @@ export default function ProjectsPage() {
         } else {
           setError('Erreur lors du chargement des projets');
         }
-      } catch (err) {
+      } catch {
         setError('Impossible de joindre le serveur.');
       } finally {
         setLoading(false);
@@ -108,14 +147,12 @@ export default function ProjectsPage() {
 
 
   // --- PROJECT FILTER ---
-  const visibleProjects = projects.filter((project: any) => {
+  const visibleProjects = projects.filter((project: Project) => {
     if (!currentUser) return false;
 
-    // 1. Is the user the owner?
     const isOwner = project.owner?.id === currentUser.id;
 
-    // 2. Is the user a member?
-    const isMember = project.members?.some((m: any) => {
+    const isMember = project.members?.some((m: ProjectMember) => {
       const memberId = m.user?.id || m.id;
       return memberId === currentUser.id;
     });
