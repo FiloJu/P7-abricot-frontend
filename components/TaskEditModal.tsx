@@ -19,6 +19,20 @@ function getContributorId(contributor: any) {
   return contributor.user?.id || contributor.userId || contributor.id;
 }
 
+const FRENCH_MONTHS = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+
+function formatDateOnly(value?: string): string {
+  if (!value) return '';
+
+  const match = value.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (!match) return value;
+
+  const [, year, month, day] = match;
+  const monthIndex = Number(month) - 1;
+
+  return `${Number(day)} ${FRENCH_MONTHS[monthIndex] || month} ${year}`;
+}
+
 export default function TaskEditModal({ isOpen, onClose, task, projectId, contributors = [] }: TaskEditModalProps) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -172,8 +186,9 @@ export default function TaskEditModal({ isOpen, onClose, task, projectId, contri
               `}} />
 
               {/* Formatted visual display, for example: "9 March". */}
+              {/* Keep render deterministic to avoid hydration mismatches. */}
               <div className={`w-full h-full border border-[#E5E7EB] rounded-[4px] pl-[17px] pr-[45px] flex items-center text-[12px] bg-white ${dueDate ? 'text-[#1F1F1F]' : 'text-[#6B7280]'}`}>
-                {dueDate ? new Date(dueDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' }) : ""}
+                {formatDateOnly(dueDate)}
               </div>
 
               {/* Calendar icon. */}

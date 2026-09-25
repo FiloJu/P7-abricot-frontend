@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable react-hooks/set-state-in-effect */
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -8,11 +9,15 @@ import Image from "next/image";
 
 export default function Navbar() {
   const pathname = usePathname();
-  const token = Cookies.get("auth_token") || Cookies.get("token") || null;
-  const isAuthenticated = Boolean(token);
+  const [isHydrated, setIsHydrated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userInitials, setUserInitials] = useState("");
 
   useEffect(() => {
+    const token = Cookies.get("auth_token") || Cookies.get("token") || null;
+    setIsAuthenticated(Boolean(token));
+    setIsHydrated(true);
+
     // Load the profile used to build the avatar label.
     const fetchUserInfos = async () => {
       if (!token) return;
@@ -48,7 +53,7 @@ export default function Navbar() {
     };
 
     fetchUserInfos();
-  }, [pathname, token]);
+  }, [pathname]);
 
   // Show the navigation only on authenticated app pages.
   const allowedPaths = ["/dashboard", "/projects", "/profile"];
@@ -56,7 +61,7 @@ export default function Navbar() {
     (path) => pathname === path || pathname.startsWith(`${path}/`)
   ) && isAuthenticated;
 
-  if (!shouldShowNavbar) return null;
+  if (!isHydrated || !shouldShowNavbar) return null;
 
   // Highlight the current section in the navigation.
   const isActive = (path: string) => pathname.startsWith(path);

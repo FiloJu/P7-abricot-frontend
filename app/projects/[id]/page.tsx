@@ -81,6 +81,29 @@ function getAssigneeId(assignee: NonNullable<ProjectTask['assignees']>[number]) 
     return assignee.userId || assignee.user_id || assignee.user?.id || assignee.id;
 }
 
+const FRENCH_MONTHS = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+
+function formatDateOnly(value?: string): string {
+    if (!value) return 'Date inconnue';
+
+    const match = value.match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if (!match) return value;
+
+    const [, year, month, day] = match;
+    const monthIndex = Number(month) - 1;
+
+    return `${Number(day)} ${FRENCH_MONTHS[monthIndex] || month} ${year}`;
+}
+
+function formatDateTime(value?: string): string {
+    if (!value) return 'Date inconnue';
+
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return 'Date inconnue';
+
+    return `${date.getUTCDate()} ${FRENCH_MONTHS[date.getUTCMonth()]} à ${String(date.getUTCHours()).padStart(2, '0')}:${String(date.getUTCMinutes()).padStart(2, '0')}`;
+}
+
 export default function ProjectDetailPage() {
   const router = useRouter();
   const { id } = useParams<{ id: string }>();
@@ -426,7 +449,8 @@ export default function ProjectDetailPage() {
                                             <div className="flex items-center gap-2 lg:gap-[8px] mb-2 lg:mb-[24px] text-[10px] lg:text-[12px] text-[#6B7280] font-regular font-inter">
                                                 <span className="font-regular text-[#6B7280]">Échéance :</span>
                                                 <Image src="/union.svg" alt="" aria-hidden="true" width={12} height={13} className="w-[12px] lg:w-[15px]" />
-                                                <span className="font-regular text-[#1F1F1F] text-[10px] lg:text-[12px] font-inter">{task.dueDate ? new Date(task.dueDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' }) : "Date inconnue"}</span>
+                                                {/* Keep render deterministic to avoid hydration mismatches. */}
+                                                <span className="font-regular text-[#1F1F1F] text-[10px] lg:text-[12px] font-inter">{formatDateOnly(task.dueDate)}</span>
                                             </div>
 
                                             <div className="flex flex-wrap items-center gap-2 lg:gap-[8px] text-[10px] lg:text-[12px] text-[#6B7280] font-regular mb-4 lg:mb-0 font-inter">
@@ -494,8 +518,8 @@ export default function ProjectDetailPage() {
                                                 {task.comments && task.comments.map((comment: TaskComment, index: number) => {
                                                     const authorName = comment.author?.name || comment.user?.name || 'Inconnu';
                                                     const initials = authorName !== 'Inconnu' ? authorName.split(' ').map((n: string) => n[0]).join('').toUpperCase().substring(0, 2) : 'U';
-                                                    const date = new Date(comment.createdAt || Date.now());
-                                                    const formattedDate = date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) + ', ' + date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+                                                    // Keep render deterministic to avoid hydration mismatches.
+                                                    const formattedDate = formatDateTime(comment.createdAt);
 
                                                     const isMe = currentUser && (comment.author?.id === currentUser.id || comment.user?.id === currentUser.id || authorName === currentUser.name);
 

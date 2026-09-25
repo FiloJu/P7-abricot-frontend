@@ -1,7 +1,8 @@
 'use client';
+/* eslint-disable react-hooks/set-state-in-effect */
 
 import { createPortal } from 'react-dom';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 
 interface AccessibleModalProps {
@@ -21,18 +22,22 @@ const focusableSelector = [
 ].join(',');
 
 export default function AccessibleModal({ isOpen, onClose, titleId, children }: AccessibleModalProps) {
-  const portalRoot = typeof document === 'undefined'
-    ? null
-    : document.getElementById('modal-root');
+  const [mounted, setMounted] = useState(false);
+  const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const onCloseRef = useRef(onClose);
+
+  useEffect(() => {
+    setMounted(true);
+    setPortalRoot(document.getElementById('modal-root'));
+  }, []);
 
   useEffect(() => {
     onCloseRef.current = onClose;
   }, [onClose]);
 
   useEffect(() => {
-    if (!isOpen || !portalRoot) return;
+    if (!isOpen || !mounted || !portalRoot) return;
 
     const opener = document.activeElement as HTMLElement | null;
     const hiddenElements = Array.from(document.body.children).filter(
@@ -98,9 +103,9 @@ export default function AccessibleModal({ isOpen, onClose, titleId, children }: 
       });
       if (opener && document.contains(opener)) opener.focus();
     };
-  }, [isOpen, portalRoot]);
+  }, [isOpen, mounted, portalRoot]);
 
-  if (!isOpen || !portalRoot) return null;
+  if (!isOpen || !mounted || !portalRoot) return null;
 
   return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-500/20 p-4 backdrop-blur-sm">
